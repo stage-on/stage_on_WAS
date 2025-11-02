@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>STAGEON 로그인</title>
+    <style>
+        body { display: grid; place-items: center; min-height: 80vh; font-family: sans-serif; }
+        .login-box { border: 1px solid #ddd; padding: 40px; border-radius: 8px; text-align: center; }
+        .login-box a { display: block; padding: 10px 20px; margin: 10px; text-decoration: none; border-radius: 5px; color: white; }
+        .google { background-color: #DB4437; }
+        .naver { background-color: #03C75A; }
+        .kakao { background-color: #FEE500; color: #3C1E1E; }
+    </style>
+</head>
+<body>
+<div class="login-box">
+    <h2>소셜 로그인</h2>
+
+    <a href="/oauth2/authorization/google" class="google" role="button">Google 로그인</a>
+    <a href="/oauth2/authorization/naver" class="naver" role="button">Naver 로그인</a>
+    <a href="/oauth2/authorization/kakao" class="kakao" role="button">Kakao 로그인</a>
+</div>
+</body>
+</html>
