@@ -1,5 +1,6 @@
 package com.stageon.stageonwas.config;
 
+import com.stageon.stageonwas.domain.auth.service.OAuth2Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,7 @@ public class SecurityConfig {
 
 
                 .oauth2Login(oauth2 -> oauth2
+                        // FIXME : 아래 코드를 리다이렉트 할곳으로 변경 필요
                         .defaultSuccessUrl("/oauth/loginInfo", true)
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2Service)
