@@ -18,7 +18,7 @@ public class UserController {
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
         return attributes.toString();
+        // FIXME: 리다이렉트할 API 완성 시 해당 URI로 리다이렉트
     }
 
-    // FIXME:
 }
