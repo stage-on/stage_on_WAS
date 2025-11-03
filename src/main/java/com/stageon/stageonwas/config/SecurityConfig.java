@@ -1,5 +1,6 @@
 package com.stageon.stageonwas.config;
 
+import com.stageon.stageonwas.domain.auth.service.OAuth2Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
