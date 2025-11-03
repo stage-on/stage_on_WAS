@@ -1,4 +1,4 @@
-package com.stageon.stageonwas.config;
+package com.stageon.stageonwas.domain.auth.service;
 
 import com.stageon.stageonwas.domain.auth.dto.UserProfile;
 import com.stageon.stageonwas.domain.auth.entity.OAuthAttributes;
@@ -67,6 +67,7 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
         return customAttribute;
     }
 
+    // DB에 USER 존재시 프로필 업데이트 / 없으면 저장
     public User updateOrSaveUser(UserProfile userProfile) {
         User user = userRepository
                 .findUserByEmailAndProvider(userProfile.getEmail(), userProfile.getProvider())
