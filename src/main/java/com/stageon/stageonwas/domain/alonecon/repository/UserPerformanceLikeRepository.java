@@ -1,0 +1,19 @@
+package com.stageon.stageonwas.domain.alonecon.repository;
+
+import com.stageon.stageonwas.domain.alonecon.entity.UserPerformanceLike;
+import com.stageon.stageonwas.domain.alonecon.entity.UserPerformanceLikeId;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+public interface UserPerformanceLikeRepository extends JpaRepository<UserPerformanceLike, UserPerformanceLikeId> {
+    // 특정 유저가 좋아요 누른 공연 목록 조회
+    @Query("SELECT upl FROM UserPerformanceLike upl " +
+            "JOIN FETCH upl.performance p " +
+            "WHERE upl.user.userId = :userId")
+    List<UserPerformanceLike> findAllWithPerformanceByUserId(@Param("userId") Long userId);
+
+    long countByUser_UserId(Long userId);
+}
