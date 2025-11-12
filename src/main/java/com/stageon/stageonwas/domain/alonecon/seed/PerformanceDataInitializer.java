@@ -3,25 +3,32 @@ package com.stageon.stageonwas.domain.alonecon.seed;
 
 import com.stageon.stageonwas.domain.alonecon.entity.PerformanceDetail;
 import com.stageon.stageonwas.domain.alonecon.repository.PerformanceDetailRepository;
+import com.stageon.stageonwas.domain.alonecon.repository.UserPerformanceLikeRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+@Profile("dev")
 @Component
 @RequiredArgsConstructor
 public class PerformanceDataInitializer {
 
+    private final UserPerformanceLikeRepository userPerformanceLikeRepository;
     private final PerformanceDetailRepository repository;
     private final JdbcTemplate jdbcTemplate;
 
+    @Transactional
     @PostConstruct
     public void run() {
+        userPerformanceLikeRepository.deleteAll();
         repository.deleteAll();
         jdbcTemplate.execute("ALTER TABLE performance_detail AUTO_INCREMENT = 1");
 
