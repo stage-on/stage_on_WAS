@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/v1/likes/**").permitAll()
+                        .requestMatchers("/api/v1/**").permitAll()
                         .requestMatchers("/oauth2/**", "/error").permitAll() // 해당 URI 는 인증X 접근가능
                         .anyRequest().authenticated()
                 )
