@@ -16,8 +16,10 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // TODO : 배포시 출처 변경
-        configuration.addAllowedOriginPattern("*"); // 모든 출처 허용
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:5173",            // (개발용) 로컬 프론트엔드
+                "https://stage-on-web.vercel.app"   // (운영용) Vercel 프론트엔드
+        ));
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드
         configuration.setAllowedHeaders(List.of("*")); // 모든 요청 헤더 허용
