@@ -37,7 +37,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/oauth2/**", "/error").permitAll() // 해당 URI 는 인증X 접근가능
+                        .requestMatchers("/oauth2/**", "/error" , "/login**").permitAll() // 해당 URI 는 인증X 접근가능
                         .anyRequest().authenticated()
                 )
 
