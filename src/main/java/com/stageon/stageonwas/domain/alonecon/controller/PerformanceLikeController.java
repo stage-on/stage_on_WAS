@@ -15,7 +15,7 @@ public class PerformanceLikeController {
 
     private final PerformanceLikeService performanceLikeService;
 
-    // 공연 좋아요
+    // 공연 좋아요 api 체크 및 cicd 체크용 주석
     @PostMapping("/performances/{performanceId}")
     public ResponseEntity<String> likePerformance(
             @RequestParam Long userId,
