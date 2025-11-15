@@ -33,12 +33,11 @@ jobs:
       - name: Copy jar to EC2
         run: |
           scp -o StrictHostKeyChecking=no -i ~/.ssh/stagekey.pem \
-           build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar \
-            ubuntu@15.164.231.12:/home/ubuntu/stageon/STAGEON-was-0.0.1-SNAPSHOT.jar
-
+            build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar \
+            ubuntu@13.209.42.138:/home/ubuntu/stage_on_WAS/STAGEON-was-0.0.1-SNAPSHOT.jar
 
       - name: Restart stageon service
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/stagekey.pem \
-            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            ubuntu@13.209.42.138 \
             "sudo systemctl daemon-reload && sudo systemctl restart stageon && sudo systemctl status stageon --no-pager -l"
