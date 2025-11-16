@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface UserPerformanceLikeRepository extends JpaRepository<UserPerformanceLike, UserPerformanceLikeId> {
@@ -16,4 +17,11 @@ public interface UserPerformanceLikeRepository extends JpaRepository<UserPerform
     List<UserPerformanceLike> findAllWithPerformanceByUserId(@Param("userId") Long userId);
 
     long countByUser_UserId(Long userId);
+
+    // 이메일 관련
+    @Query("SELECT upl FROM UserPerformanceLike upl " +
+            "JOIN FETCH upl.user u " +
+            "JOIN FETCH upl.performance p " +
+            "WHERE p.tkstdate = :tkstdate")
+    List<UserPerformanceLike> findAllWithUserAndPerformanceByPerformanceTkstdate(@Param("tkstdate") LocalDate tkstdate);
 }
