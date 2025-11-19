@@ -22,13 +22,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final List<String> EXCLUDE_URLS = List.of(
             "/oauth2/**",
             "/error",
-            "/v3/api-docs",         // v3/api-docs 전체 주소 (정확한 매칭을 위해)
-            "/v3/api-docs/**",      // v3/api-docs 하위 경로
-            "/swagger-ui",          // swagger-ui 전체 주소
-            "/swagger-ui/**",       // swagger-ui 하위 경로
-            "/swagger-resources/**",
-            "/swagger-resources",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-ui",
+            "/swagger-ui/**",
             "/swagger-ui.html",
+            "/swagger-ui/index.html",
+            "/swagger-resources",
+            "/swagger-resources/**",
             "/webjars/**",
             "/api-docs/**"
     );
