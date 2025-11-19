@@ -21,7 +21,6 @@ public class UserProfile {
         this.email = email;
     }
 
-    // DTO 파일을 통하여 Entity를 생성하는 메소드
     public User toEntity() {
         return User.builder()
                 .username(this.username)

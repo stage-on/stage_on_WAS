@@ -31,7 +31,7 @@ public class EmailService {
         // 본문
         String performanceListText = performances.stream()
                 .map(p -> String.format("- %s (예매일: %s)", p.getPrfnm(), p.getTkstdate().toString()))
-                .collect(Collectors.joining("\n")); // 각 공연을 '줄바꿈'으로 연결
+                .collect(Collectors.joining("\n"));
 
         String text = String.format(
                 "안녕하세요, %s님!\n" +
@@ -50,8 +50,8 @@ public class EmailService {
             javaMailSender.send(message);
         } catch (Exception e) {
             String failedPerformanceNames = performances.stream()
-                    .map(PerformanceDetail::getPrfnm) // (공연명만 '추출')
-                    .collect(Collectors.joining(", ")); // (쉼표로 '연결')
+                    .map(PerformanceDetail::getPrfnm)
+                    .collect(Collectors.joining(", "));
             log.error(
                     "이메일 발송 실패: User='{}', FailedPerformances='{}', Error='{}'",
                     user.getEmail(),
