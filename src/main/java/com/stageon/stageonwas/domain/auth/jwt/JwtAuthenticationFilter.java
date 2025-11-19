@@ -21,7 +21,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final List<String> EXCLUDE_URLS = List.of(
             "/oauth2/**",
-            "/error"
+            "/error",
+            "/v3/api-docs",         // v3/api-docs 전체 주소 (정확한 매칭을 위해)
+            "/v3/api-docs/**",      // v3/api-docs 하위 경로
+            "/swagger-ui",          // swagger-ui 전체 주소
+            "/swagger-ui/**",       // swagger-ui 하위 경로
+            "/swagger-resources/**",
+            "/swagger-resources",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/api-docs/**"
     );
 
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
