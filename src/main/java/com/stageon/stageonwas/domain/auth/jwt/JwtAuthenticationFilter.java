@@ -39,7 +39,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return EXCLUDE_URLS.stream().anyMatch(exclude -> pathMatcher.match(exclude, path));
+        System.out.println("=================================================");
+        System.out.println(">>> [JwtFilter] 들어온 요청 주소(URI): " + path);
+        System.out.println("=================================================");
+
+        // 🛡️ [해결책] 주소 앞뒤가 어떻게 짤렸든 'swagger'만 포함되면 통과시킵니다.
+        if (path.contains("/swagger-ui") ||
+                path.contains("/v3/api-docs") ||
+                path.contains("/swagger-resources") ||
+                path.contains("/webjars") ||
+                path.contains("/oauth2") ||
+                path.contains("/error") ||
+                path.contains("/api-docs")) {
+            return true; // 필터 건너뛰기
+        }
+
+        return false;
     }
 
     @Override
