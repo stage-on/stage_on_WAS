@@ -24,6 +24,15 @@ public class SecurityConfig {
     private final OAuth2Service oAuth2Service;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private static final String[] AUTH_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/swagger-resources",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/api-docs/**",
+    };
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -36,6 +45,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(authz -> authz
+                        .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/oauth2/**", "/error" , "/login**").permitAll() // 해당 URI 는 인증X 접근가능
                         .anyRequest().authenticated()
