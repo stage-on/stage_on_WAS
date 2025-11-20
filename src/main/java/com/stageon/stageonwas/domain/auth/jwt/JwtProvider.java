@@ -28,8 +28,8 @@ public class JwtProvider {
         this.issuer = issuer;
     }
 
-    public String generateAccessToken(String email) {
-        return createToken(email, accessTokenExpiration);
+    public String generateAccessToken(Long userId) {
+        return createToken(String.valueOf(userId), accessTokenExpiration);
     }
 
     private String createToken(String subject, long expirationTime) {

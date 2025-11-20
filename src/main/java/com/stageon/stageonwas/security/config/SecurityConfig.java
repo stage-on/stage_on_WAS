@@ -1,4 +1,4 @@
-package com.stageon.stageonwas.config;
+package com.stageon.stageonwas.security.config;
 
 import com.stageon.stageonwas.domain.auth.jwt.JwtAuthenticationFilter;
 import com.stageon.stageonwas.domain.auth.jwt.OAuth2SuccessHandler;

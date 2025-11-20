@@ -2,8 +2,10 @@ package com.stageon.stageonwas.domain.artist.controller;
 
 import com.stageon.stageonwas.domain.artist.dto.ArtistLikeResDto;
 import com.stageon.stageonwas.domain.artist.service.ArtistLikeService;
+import com.stageon.stageonwas.security.details.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,23 +19,30 @@ public class ArtistLikeController {
 
     @PostMapping("/artists/{artistId}")
     public ResponseEntity<String> likeArtist(
-            @RequestParam Long userId,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long artistId) {
+
+        Long userId = userDetails.getId();
         artistLikeService.likeArtist(userId, artistId);
         return ResponseEntity.ok("아티스트 좋아요 성공");
     }
 
     @DeleteMapping("/artists/{artistId}")
     public ResponseEntity<String> unlikeArtist(
-            @RequestParam Long userId,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long artistId) {
+
+        Long userId = userDetails.getId();
         artistLikeService.unlikeArtist(userId, artistId);
         return ResponseEntity.ok("아티스트 좋아요 취소 성공");
     }
 
-    // 좋아요 한 아티스트 조회
     @GetMapping("/my/bands")
-    public ResponseEntity<List<ArtistLikeResDto>> getMyBands(@RequestParam Long userId) {
+    public ResponseEntity<List<ArtistLikeResDto>> getMyBands(
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        Long userId = userDetails.getId();
+
         List<ArtistLikeResDto> myBands = artistLikeService.getMyBands(userId);
         return ResponseEntity.ok(myBands);
     }
