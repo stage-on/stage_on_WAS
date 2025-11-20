@@ -1,4 +1,4 @@
-package com.stageon.stageonwas.config;
+package com.stageon.stageonwas.security.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
