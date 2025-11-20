@@ -36,3 +36,5 @@ jwt:
   expiration:
     access-token: 21600000        # 6시간
   issuer: "stageon"
+server:
+  forward-headers-strategy: framework
