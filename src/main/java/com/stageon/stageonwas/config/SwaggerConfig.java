@@ -6,6 +6,7 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+//cicd test comment
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "STAGE-ON API", version = "v1", description = "API 명세"))
 public class SwaggerConfig {
