@@ -1,60 +1,54 @@
-name: CI/CD Deploy
+name: CI/CD Deploy (Develop Server Only)
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "develop" ]   # ⬅️ develop만 배포 트리거
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      ## 1. 소스 체크아웃
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # 변경 1: 지금 어떤 커밋으로 빌드되는지 확인
-      - name: Show build commit
-        run: |
-          echo "===== CURRENT BRANCH ====="
-          git rev-parse --abbrev-ref HEAD
-          echo "===== LAST COMMIT ====="
-          git log -1 --oneline
-
+      ## 2. JDK 설정
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # 변경 2: Gradle 캐시/데몬 완전 종료 (이전 코드가 jar에 섞이는 현상 방지)
-      - name: Clear Gradle Cache
-        run: |
-          ./gradlew --stop || true
-          rm -rf ~/.gradle/caches
-          rm -rf ~/.gradle/daemon
-          rm -rf ~/.gradle/native
+      ## 3. gradlew 실행 권한 부여
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
 
-      # 변경 3: 캐시 OFF로 완전 재빌드 (최신 코드 100% 반영)
+      ## 4. JAR 빌드
       - name: Build with Gradle
-        run: ./gradlew --no-build-cache clean bootJar
+        run: ./gradlew clean bootJar
 
-      - name: List built jars
-        run: ls -al build/libs
-
+      ## 5. SSH 키 등록
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/stagekey.pem
           chmod 600 ~/.ssh/stagekey.pem
 
-      - name: Copy jar to EC2
+      ## 6. 빌드된 JAR 서버로 복사
+      - name: Copy jar to EC2 (Develop Server)
         run: |
           scp -o StrictHostKeyChecking=no -i ~/.ssh/stagekey.pem \
             build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar \
-            ubuntu@13.209.42.138:/home/ubuntu/stage_on_WAS/build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar
+            ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/stage_on_WAS/build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar
 
+      ## 7. 서버 재시작
       - name: Restart stageon service
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/stagekey.pem \
-            ubuntu@13.209.42.138 \
+            ubuntu@${{ secrets.EC2_HOST }} \
             "sudo systemctl daemon-reload && sudo systemctl restart stageon && sudo systemctl status stageon --no-pager -l"
+
+
+
