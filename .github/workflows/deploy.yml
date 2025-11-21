@@ -44,8 +44,8 @@ jobs:
       - name: Copy jar to EC2 (Develop Server)
         run: |
           scp -o StrictHostKeyChecking=no -i ~/.ssh/stagekey.pem \
-          build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar \
-          ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/stage_on_WAS/app.jar
+            build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar \
+            ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/stage_on_WAS/app.jar
 
       ## 8. 서버 재시작 (systemd 서비스 기준)
       - name: Restart stageon service
