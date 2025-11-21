@@ -29,7 +29,7 @@ public class SearchHistory {
     private String keyword; // 검색한 키워드
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false) //cicd 테스트
     private LocalDateTime createdAt; // 검색한 시간
 
     public SearchHistory(User user, String keyword) {
