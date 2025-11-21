@@ -34,7 +34,7 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no -i ~/.ssh/stagekey.pem \
             build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar \
-            ubuntu@13.209.42.138:/home/ubuntu/stage_on_WAS/STAGEON-was-0.0.1-SNAPSHOT.jar
+            ubuntu@13.209.42.138:/home/ubuntu/stage_on_WAS/build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar
 
       - name: Restart stageon service
         run: |
