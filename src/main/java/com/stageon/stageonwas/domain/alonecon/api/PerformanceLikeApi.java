@@ -91,18 +91,24 @@ public interface PerformanceLikeApi {
                             schema = @Schema(implementation = PerformanceLikeResDto.class),
                             examples = @ExampleObject(value = """
                                     [
-                                      {
-                                        "performanceId": 1,
-                                        "title": "검정치마 단독공연",
-                                        "posterUrl": "https://image.example.com/poster/1.jpg"
-                                      },
-                                      {
-                                        "performanceId": 7,
-                                        "title": "2024 아이유 콘서트",
-                                        "posterUrl": "https://image.example.com/poster/7.jpg"
-                                      }
-                                    ]
-                                    """) // 💡 DTO 기반 성공 예시 추가
+                                              {
+                                                "performanceId": 1,
+                                                "title": "검정치마 단독공연",
+                                                "posterUrl": "https://image.example.com/poster/1.jpg",
+                                                "prfpdfrom": "2025-12-20",
+                                                "prfpdto": "2025-12-21",
+                                                "fcltynm": "일산 킨텍스"
+                                              },
+                                              {
+                                                "performanceId": 7,
+                                                "title": "2024 아이유 콘서트",
+                                                "posterUrl": "https://image.example.com/poster/7.jpg",
+                                                "prfpdfrom": "2024-11-09",
+                                                "prfpdto": "2024-11-10",
+                                                "fcltynm": "KSPO DOME"
+                                              }
+                                            ]
+                                    """)
                     )
             ),
             @ApiResponse(responseCode = "404", description = "사용자 없음",

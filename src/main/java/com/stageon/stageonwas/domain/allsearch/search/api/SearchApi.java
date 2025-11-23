@@ -56,7 +56,7 @@ public interface SearchApi {
                                             ]
                                         },
                                         "artists": {
-                                            재희형 도대체 아티스트 merge 언제 하실거죠..
+                                            아티스트 merge 될때 추가예정
                                             "count": 0,
                                             "items": []
                                         }
