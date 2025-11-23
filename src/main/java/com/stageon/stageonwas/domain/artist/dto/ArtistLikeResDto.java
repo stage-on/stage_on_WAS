@@ -9,13 +9,13 @@ import lombok.Getter;
 public class ArtistLikeResDto {
 
     @Schema(description = "아티스트 ID", example = "5")
-    private Long artistId;
+    private final Long artistId;
 
     @Schema(description = "아티스트 이름", example = "데이식스 (DAY6)")
-    private String artistName;
+    private final String artistName;
 
     @Schema(description = "아티스트 사진 URL", example = "https://image.example.com/day6.jpg")
-    private String artistPictureUrl;
+    private final String artistPictureUrl;
 
     public ArtistLikeResDto(Artist artist) {
         this.artistId = artist.getArtistId();
