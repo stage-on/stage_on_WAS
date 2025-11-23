@@ -1,6 +1,7 @@
 package com.stageon.stageonwas.domain.allsearch.recommend.controller;
 
 
+import com.stageon.stageonwas.domain.allsearch.recommend.api.RecommendApi;
 import com.stageon.stageonwas.domain.allsearch.recommend.dto.RecommendedResDto;
 import com.stageon.stageonwas.domain.allsearch.recommend.service.RecommendService;
 import com.stageon.stageonwas.security.details.CustomUserDetails;
@@ -14,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/recommend")
-public class RecommendController {
+public class RecommendController implements RecommendApi {
 
     private final RecommendService recommendService;
 
