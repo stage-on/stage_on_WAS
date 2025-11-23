@@ -9,6 +9,8 @@ import com.stageon.stageonwas.domain.artist.repository.UserArtistLikeRepository;
 import com.stageon.stageonwas.domain.auth.entity.User;
 import com.stageon.stageonwas.domain.auth.repository.UserRepository;
 import com.stageon.stageonwas.domain.common.service.LikeValidationService;
+import com.stageon.stageonwas.exception.CustomException;
+import com.stageon.stageonwas.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,15 +33,17 @@ public class ArtistLikeService {
         likeValidationService.checkMaxLikes(userId);
 
         // 실제 유저와 아티스트가 존재하는지 확인
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저 없음"));
-        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new RuntimeException("아티스트 없음"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        Artist artist = artistRepository.findById(artistId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ARTIST_NOT_FOUND));
 
         // 복합 PK 객체 생성
         UserArtistLikeId id = new UserArtistLikeId(userId, artistId);
 
         // 이미 좋아요를 눌렀는지 확인 (중복 방지)
         if (userArtistLikeRepository.existsById(id)) {
-            throw new RuntimeException("이미 좋아요 누른 아티스트");
+            throw new CustomException(ErrorCode.ALREADY_LIKED);
         }
 
         userArtistLikeRepository.save(new UserArtistLike(user, artist));
@@ -54,7 +58,7 @@ public class ArtistLikeService {
 
         // 존재하는지 확인 후 삭제
         if (!userArtistLikeRepository.existsById(id)) {
-            throw new RuntimeException("좋아요 누른 적 없음");
+            throw new CustomException(ErrorCode.LIKE_NOT_FOUND);
         }
         userArtistLikeRepository.deleteById(id);
     }

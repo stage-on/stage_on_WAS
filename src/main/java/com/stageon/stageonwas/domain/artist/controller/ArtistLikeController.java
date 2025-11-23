@@ -1,5 +1,6 @@
 package com.stageon.stageonwas.domain.artist.controller;
 
+import com.stageon.stageonwas.domain.artist.api.ArtistLikeApi;
 import com.stageon.stageonwas.domain.artist.dto.ArtistLikeResDto;
 import com.stageon.stageonwas.domain.artist.service.ArtistLikeService;
 import com.stageon.stageonwas.security.details.CustomUserDetails;
@@ -13,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/likes")
-public class ArtistLikeController {
+public class ArtistLikeController implements ArtistLikeApi {
 
     private final ArtistLikeService artistLikeService;
 
