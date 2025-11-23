@@ -5,62 +5,55 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "performance_detail")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+@Builder
 public class PerformanceDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // FK 타깃이 될 컬럼 → 반드시 Unique + NotNull
+    // === 공통 기본 정보 ===
     @Column(nullable = false, unique = true)
-    private String mt20id; //kopis 공연 구별 ID
-
-    private String prfnm; //공연 제목
-    private LocalDate prfpdfrom; //공연 시작일
-    private LocalDate prfpdto; //공연 종료일
-    private String fcltynm; //공연 장소
-    private String prfruntime; //공연 플레이 타임
-    private String prfage; //공연 관람 가능 나이
+    private String mt20id;
+    private String prfnm;
+    private LocalDate prfpdfrom;
+    private LocalDate prfpdto;
+    private String fcltynm;
+    private String prfruntime;
+    private String prfage;
 
     @Lob
-    private String pcseguidance; //공연 좌석별 가격표
+    private String pcseguidance;
 
-    private String poster; //공연 포스터
-    private String prfstate; //공연 완료, 예정 상태표
-    private String dtguidance; //공연 시작 시간
-    private LocalDate tkstdate; //티켓팅 시작일
-    private LocalTime tksttime; //티켓팅 종료일
-    private Integer typeofcon; //페스티벌, 공연 분류 코드 1이면 단독공연 및 콜라보 공연, 2면 페스티벌
-
-
-    /* ===== 소개 이미지: Embeddable 리스트 ===== */
+    private String poster;
+    private String prfstate;
+    private String dtguidance;
+    private LocalDate tkstdate;
+    private LocalTime tksttime;
+    private Integer typeofcon;  // 1=공연, 2=페스티벌
+    private boolean newstate;
+    // ===================================================================
+    // 🎫 공연(콘서트) 관련
+    // ===================================================================
+    @Builder.Default
     @ElementCollection
     @CollectionTable(
             name = "performance_styurls",
             joinColumns = @JoinColumn(
-                    name = "performance_mt20id",
-                    referencedColumnName = "mt20id"
+                    name = "performance_mt20id",       // FK 컬럼명
+                    referencedColumnName = "mt20id"    // 부모 엔티티 컬럼명
             )
     )
-    @AttributeOverrides({
-            @AttributeOverride(name = "relatenm",  column = @Column(name = "relatenm")),
-            @AttributeOverride(name = "relateurl", column = @Column(name = "relateurl"))
-    })
-    private List<Artpic> styurls; //출연 아티스트
+    private List<ArtPic> styurls = new ArrayList<>();
 
-    @Embeddable
-    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-    public static class Artpic { //출연 아티스트 이름 및 사진
-        private String relatenm; //이름
-        private String relateurl; //사진 URL
-    }
-
-    /* ===== 관련 링크: Embeddable 리스트 ===== */
+    @Builder.Default
     @ElementCollection
     @CollectionTable(
             name = "performance_relates",
@@ -69,16 +62,119 @@ public class PerformanceDetail {
                     referencedColumnName = "mt20id"
             )
     )
-    @AttributeOverrides({
-            @AttributeOverride(name = "relatenm",  column = @Column(name = "relatenm")),
-            @AttributeOverride(name = "relateurl", column = @Column(name = "relateurl"))
-    })
-    private List<Relate> relates; //예매처
+    private List<Relate> relates = new ArrayList<>();
+
+    // ===================================================================
+    // 🎤 페스티벌 관련
+    // ===================================================================
+    @Builder.Default
+    @ElementCollection
+    @CollectionTable(
+            name = "fes_days",
+            joinColumns = @JoinColumn(
+                    name = "performance_mt20id",
+                    referencedColumnName = "mt20id"
+            )
+    )
+    private List<DayInfo> days = new ArrayList<>();
+
+    @Builder.Default
+    @ElementCollection
+    @CollectionTable(
+            name = "fes_slots",
+            joinColumns = @JoinColumn(
+                    name = "performance_mt20id",
+                    referencedColumnName = "mt20id"
+            )
+    )
+    @OrderBy("date ASC, stageOrder ASC, start ASC")
+    private List<Slot> slots = new ArrayList<>();
+
+    @Builder.Default
+    @ElementCollection
+    @CollectionTable(
+            name = "fes_links",
+            joinColumns = @JoinColumn(
+                    name = "performance_mt20id",
+                    referencedColumnName = "mt20id"
+            )
+    )
+    private List<Relate> fesLinks = new ArrayList<>();
+
+    @Builder.Default
+    @ElementCollection
+    @CollectionTable(
+            name = "fes_artist_pics",
+            joinColumns = @JoinColumn(
+                    name = "performance_mt20id",
+                    referencedColumnName = "mt20id"
+            )
+    )
+    private List<ArtistPic> artistPics = new ArrayList<>();
+
+
+    // ===================================================================
+    // Embeddable 클래스
+    // ===================================================================
 
     @Embeddable
     @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
     public static class Relate {
-        private String relatenm; //예매처 이름
-        private String relateurl; //예매처 URL
+        private String relatenm;
+        private String relateurl;
+    }
+
+    @Embeddable
+    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+    public static class ArtPic {
+        private String relatenm;
+        private String relateurl;
+    }
+
+    @Embeddable
+    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+    public static class DayInfo {
+        @Column(nullable = false)
+        private LocalDate date;
+        private LocalTime open;
+        private LocalTime close;
+    }
+
+    @Embeddable
+    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+    public static class Slot {
+        @Column(nullable = false)
+        private LocalDate date;
+
+        @Column(nullable = false)
+        private String stageId;
+
+        @Column(nullable = false)
+        private String stageName;
+
+        private Integer stageOrder;
+
+        @Column(nullable = false)
+        private String artist;
+
+        @Column(nullable = false)
+        private LocalTime start;
+
+        @Column(nullable = false)
+        private LocalTime end;
+
+        @Column(nullable = false)
+        private Integer minutes;
+
+        private String img;
+        private String note;
+    }
+
+    @Embeddable
+    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+    public static class ArtistPic {
+        private LocalDate date;
+        private String relatenm;
+        private String url;
     }
 }
