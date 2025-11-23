@@ -9,6 +9,8 @@ import com.stageon.stageonwas.domain.alonecon.repository.UserPerformanceLikeRepo
 import com.stageon.stageonwas.domain.auth.entity.User;
 import com.stageon.stageonwas.domain.auth.repository.UserRepository;
 import com.stageon.stageonwas.domain.common.service.LikeValidationService;
+import com.stageon.stageonwas.exception.CustomException;
+import com.stageon.stageonwas.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,13 +33,13 @@ public class PerformanceLikeService {
         // 검증로직
         likeValidationService.checkMaxLikes(userId);
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저 없음"));
-        PerformanceDetail performance = performanceRepository.findById(performanceId).orElseThrow(() -> new RuntimeException("공연 없음"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        PerformanceDetail performance = performanceRepository.findById(performanceId).orElseThrow(() -> new CustomException(ErrorCode.PERFORMANCE_NOT_FOUND));
 
         UserPerformanceLikeId id = new UserPerformanceLikeId(userId, performanceId);
 
         if (userPerformanceLikeRepository.existsById(id)) {
-            throw new RuntimeException("이미 좋아요 누른 공연");
+            throw new CustomException(ErrorCode.ALREADY_LIKED);
         }
 
         userPerformanceLikeRepository.save(new UserPerformanceLike(user, performance));
@@ -51,7 +53,7 @@ public class PerformanceLikeService {
         UserPerformanceLikeId id = new UserPerformanceLikeId(userId, performanceId);
 
         if (!userPerformanceLikeRepository.existsById(id)) {
-            throw new RuntimeException("좋아요 누른 적 없음");
+            throw new CustomException(ErrorCode.LIKE_NOT_FOUND);
         }
         userPerformanceLikeRepository.deleteById(id);
     }
