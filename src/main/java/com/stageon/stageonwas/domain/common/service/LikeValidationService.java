@@ -2,6 +2,8 @@ package com.stageon.stageonwas.domain.common.service;
 
 import com.stageon.stageonwas.domain.alonecon.repository.UserPerformanceLikeRepository;
 import com.stageon.stageonwas.domain.artist.repository.UserArtistLikeRepository;
+import com.stageon.stageonwas.exception.CustomException;
+import com.stageon.stageonwas.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,14 +25,14 @@ public class LikeValidationService {
     public void checkMaxLikes(Long userId) {
         long totalLikes = getTotalLikes(userId);
         if (totalLikes >= 5) {
-            throw new RuntimeException("좋아요는 아티스트와 공연을 합쳐 최대 5개까지만 가능합니다.");
+            throw new CustomException(ErrorCode.LIKE_LIMIT_EXCEEDED);
         }
     }
 
     public void checkMinLikes(Long userId) {
         long totalLikes = getTotalLikes(userId);
         if (totalLikes <= 2) {
-            throw new RuntimeException("좋아요는 최소 2개를 유지해야 합니다.");
+            throw new CustomException(ErrorCode.LIKE_MIN_REQUIRED);
         }
     }
 }
