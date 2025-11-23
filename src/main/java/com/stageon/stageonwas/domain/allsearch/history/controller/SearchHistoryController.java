@@ -1,5 +1,6 @@
 package com.stageon.stageonwas.domain.allsearch.history.controller;
 
+import com.stageon.stageonwas.domain.allsearch.history.api.HistoryApi;
 import com.stageon.stageonwas.domain.allsearch.history.dto.SearchHistoryResDto;
 import com.stageon.stageonwas.domain.allsearch.history.service.SearchHistoryService;
 import com.stageon.stageonwas.security.details.CustomUserDetails;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/search")
-public class SearchHistoryController {
+public class SearchHistoryController implements HistoryApi {
 
     private final SearchHistoryService searchHistoryService;
 
