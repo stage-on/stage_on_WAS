@@ -23,7 +23,7 @@ public class SearchPerformanceResDto {
         this.startDate = performance.getPrfpdfrom();
         this.endDate = performance.getPrfpdto();
         this.artistNames = performance.getStyurls().stream()
-                .map(PerformanceDetail.Artpic::getRelatenm)
+                .map(PerformanceDetail.ArtPic::getRelatenm)
                 .collect(Collectors.toList());
     }
 }
