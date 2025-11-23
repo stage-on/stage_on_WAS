@@ -4,6 +4,8 @@ import com.stageon.stageonwas.domain.alonecon.entity.PerformanceDetail;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
+import java.time.LocalDate;
+
 // MYCONCERT
 @Schema(description = "공연 좋아요 DTO")
 @Getter
@@ -17,9 +19,21 @@ public class PerformanceLikeResDto {
     @Schema(description = "포스터 URL", example = "https://~")
     private final String posterUrl; // poster
 
+    @Schema(description = "공연 시작일", example = "2025-12-20")
+    private final LocalDate prfpdfrom; //공연 시작일
+
+    @Schema(description = "공연 종료일", example = "2025-12-21")
+    private final LocalDate prfpdto; //공연 종료일
+
+    @Schema(description = "공연 장소", example = "일산 킨텍스")
+    private final String fcltynm; //공연 장소
+
     public PerformanceLikeResDto(PerformanceDetail performance) {
         this.performanceId = performance.getId();
         this.title = performance.getPrfnm();
         this.posterUrl = performance.getPoster();
+        this.prfpdfrom = performance.getPrfpdfrom();
+        this.prfpdto = performance.getPrfpdto();
+        this.fcltynm = performance.getFcltynm();
     }
 }
