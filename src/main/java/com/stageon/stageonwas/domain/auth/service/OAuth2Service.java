@@ -15,8 +15,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -57,12 +57,13 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
                                   String userNameAttributeName,
                                   Map<String, Object> attributes,
                                   UserProfile userProfile) {
-        Map<String, Object> customAttribute = new ConcurrentHashMap<>();
+        Map<String, Object> customAttribute = new HashMap<>();
 
         customAttribute.put(userNameAttributeName, attributes.get(userNameAttributeName));
         customAttribute.put("provider", registrationId);
         customAttribute.put("name", userProfile.getUsername());
         customAttribute.put("email", userProfile.getEmail());
+        customAttribute.put("profileImage", userProfile.getProfileImage());
 
         return customAttribute;
     }
@@ -71,7 +72,7 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
     public User updateOrSaveUser(UserProfile userProfile) {
         User user = userRepository
                 .findUserByEmailAndProvider(userProfile.getEmail(), userProfile.getProvider())
-                .map(value -> value.updateUser(userProfile.getUsername(), userProfile.getEmail()))
+                .map(value -> value.updateUser(userProfile.getUsername(), userProfile.getEmail(), userProfile.getProfileImage()))
                 .orElse(userProfile.toEntity());
 
         return userRepository.save(user);
