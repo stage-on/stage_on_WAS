@@ -35,11 +35,14 @@ public class User {
     @Column(name = "provider", nullable = false)
     private String provider; // 사용자가 로그인한 서비스(ex) google, naver..)
 
+    @Column(name = "profile_image")
+    private String profileImage;
+
     // 사용자의 이름이나 이메일을 업데이트하는 메소드
-    public User updateUser(String username, String email) {
+    public User updateUser(String username, String email, String profileImage) {
         this.username = username;
         this.email = email;
-
+        this.profileImage = profileImage;
         return this;
     }
 }
