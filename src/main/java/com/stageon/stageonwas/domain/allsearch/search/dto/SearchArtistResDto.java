@@ -5,17 +5,18 @@ import lombok.Getter;
 
 @Getter
 public class SearchArtistResDto {
-    private final Long artistId;
-    private final String artistName;
-    private final String artistPictureUrl;
-    private final String artistIntroduction;
-    private final String artistMember;
+
+    private final Long id;               // 엔티티 id
+    private final String bandName;       // 밴드명
+    private final String relateUrl;      // 밴드 사진 URL
+    private final String sessionMem;     // 구성원
+    private final String introBand;      // 소개글
 
     public SearchArtistResDto(Artist artist) {
-        this.artistId = artist.getArtistId();
-        this.artistName = artist.getArtistName();
-        this.artistPictureUrl = artist.getArtistPictureUrl();
-        this.artistIntroduction = artist.getArtistIntroduction();
-        this.artistMember = artist.getArtistMember();
+        this.id = artist.getId();
+        this.bandName = artist.getBandName();
+        this.relateUrl = artist.getRelateUrl();
+        this.sessionMem = artist.getSessionMem();
+        this.introBand = artist.getIntroBand();
     }
 }

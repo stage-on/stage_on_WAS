@@ -24,7 +24,7 @@ public class SearchService {
     public SearchResDto getSearchResults(Long userId, String keyword) {
         List<PerformanceDetail> performances = performanceDetailRepository.findByPrfnmContaining(keyword);
 
-        List<Artist> artists = artistRepository.findByArtistNameContaining(keyword);
+        List<Artist> artists = artistRepository.findByBandNameContaining(keyword);
 
         searchHistoryService.saveSearchHistory(userId, keyword);
 
