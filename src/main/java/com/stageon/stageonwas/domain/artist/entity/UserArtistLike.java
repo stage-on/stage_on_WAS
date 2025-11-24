@@ -33,6 +33,6 @@ public class UserArtistLike {
     public UserArtistLike(User user, Artist artist) {
         this.user = user;
         this.artist = artist;
-        this.id = new UserArtistLikeId(user.getUserId(), artist.getArtistId());
+        this.id = new UserArtistLikeId(user.getUserId(), artist.getId());
     }
 }

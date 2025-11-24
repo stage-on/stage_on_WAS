@@ -18,8 +18,8 @@ public class ArtistLikeResDto {
     private final String artistPictureUrl;
 
     public ArtistLikeResDto(Artist artist) {
-        this.artistId = artist.getArtistId();
-        this.artistName = artist.getArtistName();
-        this.artistPictureUrl = artist.getArtistPictureUrl();
+        this.artistId = artist.getId();
+        this.artistName = artist.getBandName();
+        this.artistPictureUrl = artist.getRelateUrl();
     }
 }
