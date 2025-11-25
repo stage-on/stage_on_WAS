@@ -24,7 +24,7 @@ public class LikeValidationService {
 
     public void checkMaxLikes(Long userId) {
         long totalLikes = getTotalLikes(userId);
-        if (totalLikes >= 5) {
+        if (totalLikes >= 5) { // FIXME : 갯수 늘리기
             throw new CustomException(ErrorCode.LIKE_LIMIT_EXCEEDED);
         }
     }
