@@ -1,3 +1,8 @@
+kopis:
+  base-url: http://www.kopis.or.kr/openApi/restful
+  service-key: ${KOPIS_SERVICE_KEY}
+  service-param: service
+
 spring:
   application:
     name: STAGEON-was
