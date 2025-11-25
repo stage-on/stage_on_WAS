@@ -1,5 +1,6 @@
 package com.stageon.stageonwas.domain.auth.dto;
 
+import com.stageon.stageonwas.domain.auth.entity.Role;
 import com.stageon.stageonwas.domain.auth.entity.User;
 import lombok.Getter;
 
@@ -30,6 +31,7 @@ public class UserProfile {
                 .email(this.email)
                 .provider(this.provider)
                 .profileImage(this.profileImage)
+                .role(Role.GUEST)
                 .build();
     }
 }

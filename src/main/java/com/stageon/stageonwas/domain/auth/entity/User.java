@@ -2,6 +2,8 @@ package com.stageon.stageonwas.domain.auth.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,6 +39,19 @@ public class User {
 
     @Column(name = "profile_image")
     private String profileImage;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    // GUEST-> USER 메소드
+    public void upgradeRoleToUser() {
+        this.role = Role.USER;
+    }
+
+    public Role getRole() {
+        return this.role;
+    }
 
     // 사용자의 이름이나 이메일을 업데이트하는 메소드
     public User updateUser(String username, String email, String profileImage) {
