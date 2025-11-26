@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,13 +34,17 @@ public class SearchHistoryService {
     }
 
     public void saveSearchHistory(Long userId, String keyword) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        // 중복 방지 로직
-        Optional<SearchHistory> mostRecent = searchHistoryRepository.findTop1ByUserOrderByCreatedAtDesc(user);
+        searchHistoryRepository.findByUserAndKeyword(user, keyword)
+                .ifPresent(searchHistoryRepository::delete);
 
-        if (mostRecent.isEmpty() || !mostRecent.get().getKeyword().equals(keyword)) {
-            searchHistoryRepository.save(new SearchHistory(user, keyword));
+        searchHistoryRepository.save(new SearchHistory(user, keyword));
+
+        if (searchHistoryRepository.countByUser(user) > 5) {
+            searchHistoryRepository.findTop1ByUserOrderByCreatedAtAsc(user)
+                    .ifPresent(searchHistoryRepository::delete);
         }
     }
 
