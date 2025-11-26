@@ -12,7 +12,6 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    //cicd test3 11/21
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
