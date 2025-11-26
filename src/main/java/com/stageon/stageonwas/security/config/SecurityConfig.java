@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/oauth2/**", "/error" , "/login**").permitAll() // 해당 URI 는 인증X 접근가능
+                        .requestMatchers("/api/artists/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
