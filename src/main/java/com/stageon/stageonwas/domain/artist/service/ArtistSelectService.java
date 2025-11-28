@@ -33,5 +33,6 @@ public class ArtistSelectService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         user.upgradeRoleToUser();
+        userRepository.save(user);
     }
 }
