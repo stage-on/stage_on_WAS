@@ -28,7 +28,7 @@ public class PerformanceLikeService {
     private final PerformanceDetailRepository performanceRepository;
     private final LikeValidationService likeValidationService;
 
-    // 1. 공연 좋아요 (MY CONCERTS 추가)
+    // 공연 좋아요 (MY CONCERTS 추가)
     public void likePerformance(Long userId, Long performanceId) {
         // 검증로직
         likeValidationService.checkMaxLikes(userId);
@@ -45,7 +45,7 @@ public class PerformanceLikeService {
         userPerformanceLikeRepository.save(new UserPerformanceLike(user, performance));
     }
 
-    // 2. 공연 좋아요 취소 (MY CONCERTS 삭제)
+    // 공연 좋아요 취소 (MY CONCERTS 삭제)
     public void unlikePerformance(Long userId, Long performanceId) {
         // 검증로직
         likeValidationService.checkMinLikes(userId);
@@ -58,7 +58,7 @@ public class PerformanceLikeService {
         userPerformanceLikeRepository.deleteById(id);
     }
 
-    // 3. 내 공연 목록 조회
+    // 내 공연 목록 조회
     @Transactional(readOnly = true)
     public List<PerformanceLikeResDto> getMyConcerts(Long userId) {
         return userPerformanceLikeRepository.findAllWithPerformanceByUserId(userId)
