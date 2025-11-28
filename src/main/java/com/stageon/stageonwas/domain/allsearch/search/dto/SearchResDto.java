@@ -13,14 +13,22 @@ public class SearchResDto {
     private final SearchResult<SearchPerformanceResDto> performances;
     private final SearchResult<SearchArtistResDto> artists;
 
-    public SearchResDto(List<PerformanceDetail> performanceList, List<Artist> artistList) {
+    public SearchResDto(List<PerformanceDetail> performanceList, List<Artist> artistList,
+                        List<Long> likedPerformanceIds, List<Long> likedArtistIds){
+
 
         List<SearchPerformanceResDto> performanceDtos = performanceList.stream()
-                .map(SearchPerformanceResDto::new)
+                .map(p -> new SearchPerformanceResDto(
+                        p,
+                        likedPerformanceIds.contains(p.getId()) // 리스트에 ID가 있으면 true
+                ))
                 .collect(Collectors.toList());
 
         List<SearchArtistResDto> artistDtos = artistList.stream()
-                .map(SearchArtistResDto::new)
+                .map(a -> new SearchArtistResDto(
+                        a,
+                        likedArtistIds.contains(a.getId()) // 리스트에 ID가 있으면 true
+                ))
                 .collect(Collectors.toList());
 
         this.performances = new SearchResult<>(performanceDtos.size(), performanceDtos);
