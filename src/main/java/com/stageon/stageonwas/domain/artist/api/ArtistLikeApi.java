@@ -1,6 +1,7 @@
 package com.stageon.stageonwas.domain.artist.api;
 
 import com.stageon.stageonwas.domain.artist.dto.ArtistLikeResDto;
+import com.stageon.stageonwas.domain.artist.dto.ArtistSelectReqDto;
 import com.stageon.stageonwas.security.details.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -74,10 +75,10 @@ public interface ArtistLikeApi {
             ),
             @ApiResponse(responseCode = "401", description = "인증 실패")
     })
-    @DeleteMapping("/artists/{artistId}")
+    @PostMapping("/artists/delete")
     ResponseEntity<String> unlikeArtist(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long artistId);
+            @RequestBody ArtistSelectReqDto artistSelectReqDto);
 
 
     @Operation(

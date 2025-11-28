@@ -25,9 +25,9 @@ public class ArtistLikeService {
     private final UserArtistLikeRepository userArtistLikeRepository;
     private final UserRepository userRepository;
     private final ArtistRepository artistRepository;
-    private final LikeValidationService likeValidationService; // 좋아요 2~5개 검증을 위함
+    private final LikeValidationService likeValidationService; // 좋아요 2~10개 검증을 위함
 
-    // 1. 아티스트 좋아요 (MY BANDS 추가)
+    // 아티스트 좋아요 (MY BANDS 추가)
     public void likeArtist(Long userId, Long artistId) {
         // 검증로직
         likeValidationService.checkMaxLikes(userId);
@@ -49,21 +49,19 @@ public class ArtistLikeService {
         userArtistLikeRepository.save(new UserArtistLike(user, artist));
     }
 
-    // 2. 아티스트 좋아요 취소 (MY BANDS 삭제)
-    public void unlikeArtist(Long userId, Long artistId) {
+    // 아티스트 좋아요 취소 (MY BANDS 삭제)
+    public void unlikeArtist(Long userId, List<Long> artistIds) {
         // 검증로직
         likeValidationService.checkMinLikes(userId);
-
-        UserArtistLikeId id = new UserArtistLikeId(userId, artistId);
-
-        // 존재하는지 확인 후 삭제
-        if (!userArtistLikeRepository.existsById(id)) {
+        int requestSize = artistIds.stream().distinct().toList().size();
+        long deletedCount = userArtistLikeRepository.deleteAllByUserUserIdAndArtistIdIn(userId, artistIds);
+        if (deletedCount != requestSize) {
             throw new CustomException(ErrorCode.LIKE_NOT_FOUND);
         }
-        userArtistLikeRepository.deleteById(id);
+
     }
 
-    // 3. 내 밴드 목록 조회
+    // 내 밴드 목록 조회
     @Transactional(readOnly = true)
     public List<ArtistLikeResDto> getMyBands(Long userId) {
         return userArtistLikeRepository.findAllWithArtistByUserId(userId)

@@ -17,4 +17,6 @@ public interface UserArtistLikeRepository extends JpaRepository<UserArtistLike, 
     List<UserArtistLike> findAllWithArtistByUserId(@Param("userId") Long userId);
 
     long countByUser_UserId(Long userId);
+
+    long deleteAllByUserUserIdAndArtistIdIn(Long userId, List<Long> artistIds);
 }
