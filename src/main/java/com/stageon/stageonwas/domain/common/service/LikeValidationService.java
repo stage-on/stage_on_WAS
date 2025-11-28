@@ -31,7 +31,7 @@ public class LikeValidationService {
 
     public void checkMinLikes(Long userId) {
         long totalLikes = getTotalLikes(userId);
-        if (totalLikes <= 2) {
+        if (totalLikes < 2) {
             throw new CustomException(ErrorCode.LIKE_MIN_REQUIRED);
         }
     }
