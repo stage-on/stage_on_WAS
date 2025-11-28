@@ -19,4 +19,8 @@ public interface UserArtistLikeRepository extends JpaRepository<UserArtistLike, 
     long countByUser_UserId(Long userId);
 
     long deleteAllByUserUserIdAndArtistIdIn(Long userId, List<Long> artistIds);
+
+    // 검색시 아티스트 좋아요가 되어있는지 확인시 필요
+    @Query("SELECT ual.id.artistId FROM UserArtistLike ual WHERE ual.id.userId = :userId")
+    List<Long> findArtistIdsByUserId(@Param("userId") Long userId);
 }

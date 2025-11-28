@@ -24,4 +24,8 @@ public interface UserPerformanceLikeRepository extends JpaRepository<UserPerform
             "JOIN FETCH upl.performance p " +
             "WHERE p.tkstdate = :tkstdate")
     List<UserPerformanceLike> findAllWithUserAndPerformanceByPerformanceTkstdate(@Param("tkstdate") LocalDate tkstdate);
+
+    // 검색시 해당 공연에 좋아요가 되어있는지 확인시 필요
+    @Query("SELECT pl.id.performanceId FROM UserPerformanceLike pl WHERE pl.id.userId = :userId")
+    List<Long> findPerformanceIdsByUserId(@Param("userId") Long userId);
 }
