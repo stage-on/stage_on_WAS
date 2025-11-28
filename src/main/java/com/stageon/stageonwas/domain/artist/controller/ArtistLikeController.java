@@ -2,6 +2,7 @@ package com.stageon.stageonwas.domain.artist.controller;
 
 import com.stageon.stageonwas.domain.artist.api.ArtistLikeApi;
 import com.stageon.stageonwas.domain.artist.dto.ArtistLikeResDto;
+import com.stageon.stageonwas.domain.artist.dto.ArtistSelectReqDto;
 import com.stageon.stageonwas.domain.artist.service.ArtistLikeService;
 import com.stageon.stageonwas.security.details.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +29,13 @@ public class ArtistLikeController implements ArtistLikeApi {
         return ResponseEntity.ok("아티스트 좋아요 성공");
     }
 
-    @DeleteMapping("/artists/{artistId}")
+    @PostMapping("/artists/delete")
     public ResponseEntity<String> unlikeArtist(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long artistId) {
+            @RequestBody ArtistSelectReqDto artistSelectReqDto) {
 
         Long userId = userDetails.getId();
-        artistLikeService.unlikeArtist(userId, artistId);
+        artistLikeService.unlikeArtist(userId, artistSelectReqDto.getArtistIds());
         return ResponseEntity.ok("아티스트 좋아요 취소 성공");
     }
 
