@@ -41,7 +41,8 @@ public interface SearchApi {
                                                     "endDate": "2025-05-11",
                                                     "artistNames": [
                                                         "검정치마"
-                                                    ]
+                                                    ],
+                                                    "liked": false
                                                 },
                                                 {
                                                     "performanceId": 2,
@@ -51,14 +52,23 @@ public interface SearchApi {
                                                     "endDate": "2025-02-09",
                                                     "artistNames": [
                                                         "검정치마"
-                                                    ]
+                                                    ],
+                                                    "liked": false
                                                 }
                                             ]
                                         },
                                         "artists": {
-                                            아티스트 merge 될때 추가예정
-                                            "count": 0,
-                                            "items": []
+                                            "count": 1,
+                                            "items": [
+                                                {
+                                                    "id": 1,
+                                                    "bandName": "검정치마",
+                                                    "relateUrl": "https://i.scdn.co/image/ab676161000051748609536d21beed6769d09d7f",
+                                                    "sessionMem": "조휴일 – 보컬·기타·작곡, 황재연 – 기타, 이강희 – 기타, 고경천 – 키보드, 최창우 – 베이스, 김희권 – 드럼, 윤원중 - 색소폰",
+                                                    "introBand": "검정치마(The Black Skirts)는 싱어송라이터 조휴일이 이끄는 1인 프로젝트 밴드로, 2008년 데뷔 앨범 『201』을 통해 한국 인디 록 씬의 대표적인 뮤지션으로 떠올랐습니다. 감성적인 멜로디와 솔직한 가사, 영어와 한국어를 넘나드는 곡들로 사랑받으며 『Team Baby』, 『Thirsty』, 『Teen Troubles』 등 앨범을 발표하며 꾸준히 활동하고 있습니다.",
+                                                    "liked": true
+                                                }
+                                            ]
                                         }
                                     }
                                     """)
