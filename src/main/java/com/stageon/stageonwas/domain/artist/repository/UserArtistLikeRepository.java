@@ -1,5 +1,6 @@
 package com.stageon.stageonwas.domain.artist.repository;
 
+import com.stageon.stageonwas.domain.artist.entity.Artist;
 import com.stageon.stageonwas.domain.artist.entity.UserArtistLike;
 import com.stageon.stageonwas.domain.artist.entity.UserArtistLikeId;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +20,9 @@ public interface UserArtistLikeRepository extends JpaRepository<UserArtistLike, 
     long countByUser_UserId(Long userId);
 
     long deleteAllByUserUserIdAndArtistIdIn(Long userId, List<Long> artistIds);
+
+    @Query("select ual.artist from UserArtistLike ual where ual.user.userId = :userId")
+    List<Artist> findLikedArtistsByUserId(@Param("userId") Long userId);
 
     // 검색시 아티스트 좋아요가 되어있는지 확인시 필요
     @Query("SELECT ual.id.artistId FROM UserArtistLike ual WHERE ual.id.userId = :userId")

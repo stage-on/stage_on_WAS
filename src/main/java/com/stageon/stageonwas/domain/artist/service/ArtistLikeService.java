@@ -27,6 +27,7 @@ public class ArtistLikeService {
     private final ArtistRepository artistRepository;
     private final LikeValidationService likeValidationService; // 좋아요 2~10개 검증을 위함
 
+
     // 아티스트 좋아요 (MY BANDS 추가)
     public void likeArtist(Long userId, Long artistId) {
         // 검증로직
