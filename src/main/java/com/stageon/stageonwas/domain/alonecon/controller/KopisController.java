@@ -1,4 +1,8 @@
 package com.stageon.stageonwas.domain.alonecon.controller;
+import com.stageon.stageonwas.domain.alonecon.service.MyBandPerformanceService;
+import com.stageon.stageonwas.domain.alonecon.dto.MyBandPerformanceSectionDto;
+import com.stageon.stageonwas.security.details.CustomUserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.stageon.stageonwas.domain.alonecon.dto.PerformanceFestivalDto;
@@ -7,6 +11,7 @@ import com.stageon.stageonwas.domain.alonecon.dto.PerformanceSimpleDto;
 import com.stageon.stageonwas.domain.alonecon.entity.PerformanceDetail;
 import com.stageon.stageonwas.domain.alonecon.repository.PerformanceDetailRepository;
 import com.stageon.stageonwas.domain.alonecon.service.KopisService;
+import com.stageon.stageonwas.domain.alonecon.service.MyBandPerformanceService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +32,21 @@ public class KopisController {
     private final KopisService svc;
     private final PerformanceDetailRepository performanceRepo;
 
+    private final MyBandPerformanceService myBandPerformanceService;
     // ===========================
 // 🎤 아티스트 이름 검색 - 기간 DTO 전용
 // ===========================
+
+    @GetMapping("/performances/my-bands/sections")
+    public ResponseEntity<List<MyBandPerformanceSectionDto>> getMyBandPerformanceSections(
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        Long userId = userDetails.getId();
+        List<MyBandPerformanceSectionDto> sections =
+                myBandPerformanceService.getMyBandPerformances(userId);
+
+        return ResponseEntity.ok(sections);
+    }
 
     @GetMapping("/random5")
     public List<PerformanceDetail> getRandom5Performances() {
