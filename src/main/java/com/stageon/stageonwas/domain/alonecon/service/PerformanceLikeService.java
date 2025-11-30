@@ -14,6 +14,7 @@ import com.stageon.stageonwas.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.stageon.stageonwas.domain.alonecon.dto.PerformancePeriodDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +46,7 @@ public class PerformanceLikeService {
         userPerformanceLikeRepository.save(new UserPerformanceLike(user, performance));
     }
 
+
     // 공연 좋아요 취소 (MY CONCERTS 삭제)
     public void unlikePerformance(Long userId, Long performanceId) {
         // 검증로직
@@ -64,6 +66,18 @@ public class PerformanceLikeService {
         return userPerformanceLikeRepository.findAllWithPerformanceByUserId(userId)
                 .stream()
                 .map(like -> new PerformanceLikeResDto(like.getPerformance()))
+                .collect(Collectors.toList());
+    }
+
+
+    // 2) 좋아요 누른 공연들 중에서 typeofcon == 2 인 것만 반환
+    @Transactional(readOnly = true)
+    public List<PerformanceLikeResDto> getMyFestivalConcerts(Long userId) {
+        return userPerformanceLikeRepository.findAllWithPerformanceByUserId(userId)
+                .stream()
+                .map(UserPerformanceLike::getPerformance)              // PerformanceDetail 꺼내고
+                .filter(p -> p.getTypeofcon() != null && p.getTypeofcon() == 2) // typeofcon == 2만
+                .map(PerformanceLikeResDto::new)                       // DTO 로 변환
                 .collect(Collectors.toList());
     }
 }

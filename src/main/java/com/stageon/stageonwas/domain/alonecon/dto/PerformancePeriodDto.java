@@ -23,6 +23,7 @@ public class PerformancePeriodDto {
     private LocalDate prfpdto;
     private String poster;
     private boolean newstate;
+    private String fcltynm;
 
     public PerformancePeriodDto (PerformanceDetail p) {
         this.mt20id = p.getMt20id();
@@ -31,5 +32,6 @@ public class PerformancePeriodDto {
         this.prfpdfrom = p.getPrfpdfrom();
         this.prfpdto = p.getPrfpdto();
         this.newstate = p.isNewstate();
+        this.fcltynm = p.getFcltynm();
     }
 }

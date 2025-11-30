@@ -1,5 +1,6 @@
 package com.stageon.stageonwas.domain.alonecon.repository;
 
+import com.stageon.stageonwas.domain.alonecon.entity.PerformanceDetail;
 import com.stageon.stageonwas.domain.alonecon.entity.UserPerformanceLike;
 import com.stageon.stageonwas.domain.alonecon.entity.UserPerformanceLikeId;
 import org.springframework.data.jpa.repository.JpaRepository;
