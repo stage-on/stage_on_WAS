@@ -36,6 +36,8 @@ public class PerformanceSimpleDto {
     private LocalTime tksttime;
     private Integer typeofcon;
     private boolean newstate;
+    private String locationUrl;
+
     // 공연/공통 관련 컬렉션
     private List<PerformanceDetail.ArtPic> styurls;
     private List<PerformanceDetail.Relate> relates;
@@ -60,5 +62,6 @@ public class PerformanceSimpleDto {
         this.styurls = p.getStyurls();
         this.relates = p.getRelates();
         this.newstate = p.isNewstate();
+        this.locationUrl = p.getLocationUrl();
     }
 }
