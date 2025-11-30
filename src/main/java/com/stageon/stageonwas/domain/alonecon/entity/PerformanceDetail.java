@@ -39,6 +39,8 @@ public class PerformanceDetail {
     private LocalTime tksttime;
     private Integer typeofcon;  // 1=공연, 2=페스티벌
     private boolean newstate;
+    private String locationUrl;
+
     // ===================================================================
     // 🎫 공연(콘서트) 관련
     // ===================================================================

@@ -303,7 +303,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("Oasis")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab67616100005174b4ddbc39706ef0f2ae0f7c9b")
                         .sessionMem("Liam Gallagher – 보컬, Noel Gallagher – 기타·보컬(리더), Gem Archer – 기타, Andy Bell – 베이스, Chris Sharrock – 드럼")
                         .introBand("Oasis는 1990년대 브릿팝 붐을 대표한 영국 록 밴드로, 『(What’s the Story) Morning Glory?』 등 다수의 명반을 남기며 세계적인 인기를 얻었습니다. 형제인 리암과 노엘 갤러거의 카리스마와 강렬한 사운드가 특징입니다.")
                         .typeofartist(2)
@@ -311,7 +311,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("Coldplay")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab676161000051741ba8fc5f5c73e7e9313cc6eb")
                         .sessionMem("Chris Martin – 보컬·피아노, Jonny Buckland – 기타, Guy Berryman – 베이스, Will Champion – 드럼")
                         .introBand("Coldplay는 1996년 결성된 영국 록 밴드로, 『Parachutes』, 『A Rush of Blood to the Head』 등 감성적인 록 사운드로 세계적인 밴드로 성장했습니다. 이후 팝·일렉트로닉 요소를 결합하며 넓은 대중성과 실험성을 보여주고 있습니다.")
                         .typeofartist(2)
@@ -319,7 +319,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("LAUV")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab67616100005174b173d69f77530d77a991984f")
                         .sessionMem("Lauv(아리 레프) – 보컬·작곡·프로듀싱")
                         .introBand("LAUV는 감정적인 팝·R&B 스타일의 곡으로 유명한 미국 싱어송라이터입니다. 〈I Like Me Better〉, 〈Paris in the Rain〉 등으로 글로벌 팬층을 확보했습니다.")
                         .typeofartist(2)
@@ -327,7 +327,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("Vaundy")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab67616100005174f6be169899c276073de46a1b")
                         .sessionMem("Vaundy – 보컬·작곡·프로듀싱")
                         .introBand("Vaundy는 일본의 싱어송라이터 겸 프로듀서로, 장르를 넘나드는 세련된 사운드와 독창적인 보컬 톤으로 큰 인기를 얻고 있습니다. 〈怪獣の花唄〉 등 히트곡을 다수 보유하고 있습니다.")
                         .typeofartist(2)
@@ -335,7 +335,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("녹황색사회")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab67616100005174d9a48d00ce7cf4d66abc76b6")
                         .sessionMem("長屋晴子 – 보컬·기타, 小林壱誓 – 기타·보컬, peppe – 키보드, 穴見真吾 – 베이스")
                         .introBand("녹황색사회(リーガルリリー, Ryokuoushoku Shakai)는 일본의 4인조 밴드로 감성적인 멜로디와 섬세한 편곡으로 많은 사랑을 받고 있으며, 애니메이션 OST 참여 등 활동 범위를 넓혀가고 있습니다.")
                         .typeofartist(2)
@@ -343,7 +343,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("ONE OK ROCK")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab6761610000517465f3ecf43652596ef75f3293")
                         .sessionMem("Taka – 보컬, Toru – 기타, Ryota – 베이스, Tomoya – 드럼")
                         .introBand("ONE OK ROCK은 일본을 대표하는 록 밴드로, 강렬한 보컬과 에너지 넘치는 사운드로 글로벌한 인기를 얻고 있습니다. 영어 앨범을 발표하며 해외 활동에도 적극적입니다.")
                         .typeofartist(2)
@@ -351,7 +351,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("King Gnu")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab676161000051742bdd859253b840c93d36963e")
                         .sessionMem("츠네타 다이키 – 보컬·기타, 이구치 사토루 – 보컬·키보드, 아라이 카즈키 – 베이스, 세키 유 – 드럼")
                         .introBand("King Gnu는 일본의 얼터너티브 록·팝 밴드로 독창적 사운드와 높은 음악성으로 주목받고 있습니다. 〈白日〉을 통해 대중적 인지도도 크게 높였습니다.")
                         .typeofartist(2)
@@ -359,7 +359,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("Muse")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab67616100005174a16a11aa5842607c88a8d8a9")
                         .sessionMem("Matthew Bellamy – 보컬·기타·피아노, Chris Wolstenholme – 베이스, Dominic Howard – 드럼")
                         .introBand("Muse는 영국의 3인조 록 밴드로, 클래식·일렉트로닉·하드록을 결합한 독창적 사운드로 세계적인 팬덤을 구축했습니다. 강렬한 라이브 퍼포먼스로도 유명합니다.")
                         .typeofartist(2)
@@ -367,7 +367,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("아이묭")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab676161000051748493420e21375f9603f49b89")
                         .sessionMem("아이묭 – 보컬·작곡·기타")
                         .introBand("아이묭(Aimyon)은 일본의 싱어송라이터로, 담백하고 감성적인 멜로디와 진솔한 가사로 폭넓은 세대에게 사랑받고 있습니다. 대표곡으로 〈マリーゴールド〉 등이 있습니다.")
                         .typeofartist(2)
@@ -375,7 +375,7 @@ public class ArtistInfoDataInitializer {
 
                 Artist.builder()
                         .bandName("SPYAIR")
-                        .relateUrl("")
+                        .relateUrl("https://i.scdn.co/image/ab6761610000517440b4d9382a8a8182b183d57a")
                         .sessionMem("YOSUKE – 보컬, UZ – 기타·프로그래밍, MOMIKEN – 베이스, KENTA – 드럼")
                         .introBand("SPYAIR는 일본의 록 밴드로, 애니메이션 OST를 통해 글로벌 팬층을 많이 확보한 팀입니다. 파워풀한 밴드 사운드와 감성적인 멜로디가 특징입니다.")
                         .typeofartist(2)
