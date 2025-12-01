@@ -98,6 +98,7 @@ public interface PerformanceLikeApi {
                                                 "prfpdfrom": "2025-12-20",
                                                 "prfpdto": "2025-12-21",
                                                 "fcltynm": "일산 킨텍스"
+                                                "mt20id" : PF123
                                               },
                                               {
                                                 "performanceId": 7,
@@ -106,6 +107,7 @@ public interface PerformanceLikeApi {
                                                 "prfpdfrom": "2024-11-09",
                                                 "prfpdto": "2024-11-10",
                                                 "fcltynm": "KSPO DOME"
+                                                "mt20id" : PF2345
                                               }
                                             ]
                                     """)
