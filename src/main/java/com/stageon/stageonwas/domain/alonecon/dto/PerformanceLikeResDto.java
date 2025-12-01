@@ -28,6 +28,9 @@ public class PerformanceLikeResDto {
     @Schema(description = "공연 장소", example = "일산 킨텍스")
     private final String fcltynm; //공연 장소
 
+    @Schema(description = "mt20id", example = "PF123")
+    private final String mt20id;
+
     public PerformanceLikeResDto(PerformanceDetail performance) {
         this.performanceId = performance.getId();
         this.title = performance.getPrfnm();
@@ -35,5 +38,6 @@ public class PerformanceLikeResDto {
         this.prfpdfrom = performance.getPrfpdfrom();
         this.prfpdto = performance.getPrfpdto();
         this.fcltynm = performance.getFcltynm();
+        this.mt20id = performance.getMt20id();
     }
 }
