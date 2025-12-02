@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -56,6 +57,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/oauth2/**", "/error" , "/login**").permitAll() // 해당 URI 는 인증X 접근가능
                         .requestMatchers("/api/artists/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
 

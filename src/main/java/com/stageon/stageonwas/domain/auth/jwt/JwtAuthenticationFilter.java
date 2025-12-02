@@ -40,8 +40,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return EXCLUDE_URLS.stream().anyMatch(exclude -> pathMatcher.match(exclude, path));
+
+        // 1) 스웨거 / 문서 관련 URL은 그대로 제외
+        boolean excludedByPath = EXCLUDE_URLS.stream()
+                .anyMatch(exclude -> pathMatcher.match(exclude, path));
+
+        boolean isGetApi = "GET".equalsIgnoreCase(request.getMethod())
+                && pathMatcher.match("/api/**", path);
+
+        return excludedByPath || isGetApi;
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
