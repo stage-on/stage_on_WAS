@@ -22,6 +22,7 @@ public class PerformanceDetail {
     // === 공통 기본 정보 ===
     @Column(nullable = false, unique = true)
     private String mt20id;
+
     private String prfnm;
     private LocalDate prfpdfrom;
     private LocalDate prfpdto;
@@ -35,23 +36,21 @@ public class PerformanceDetail {
     private String poster;
     private String prfstate;
     private String dtguidance;
+
     private LocalDate tkstdate;
     private LocalTime tksttime;
-    private Integer typeofcon;  // 1=공연, 2=페스티벌
+    private Integer typeofcon;
     private boolean newstate;
     private String locationUrl;
 
     // ===================================================================
-    // 🎫 공연(콘서트) 관련
+    // 🎫 공연 관련 (일반 Relate / ArtPic)
     // ===================================================================
     @Builder.Default
     @ElementCollection
     @CollectionTable(
             name = "performance_styurls",
-            joinColumns = @JoinColumn(
-                    name = "performance_mt20id",       // FK 컬럼명
-                    referencedColumnName = "mt20id"    // 부모 엔티티 컬럼명
-            )
+            joinColumns = @JoinColumn(name = "performance_id")
     )
     private List<ArtPic> styurls = new ArrayList<>();
 
@@ -59,24 +58,19 @@ public class PerformanceDetail {
     @ElementCollection
     @CollectionTable(
             name = "performance_relates",
-            joinColumns = @JoinColumn(
-                    name = "performance_mt20id",
-                    referencedColumnName = "mt20id"
-            )
+            joinColumns = @JoinColumn(name = "performance_id")
     )
     private List<Relate> relates = new ArrayList<>();
 
     // ===================================================================
     // 🎤 페스티벌 관련
     // ===================================================================
+
     @Builder.Default
     @ElementCollection
     @CollectionTable(
             name = "fes_days",
-            joinColumns = @JoinColumn(
-                    name = "performance_mt20id",
-                    referencedColumnName = "mt20id"
-            )
+            joinColumns = @JoinColumn(name = "performance_id")
     )
     private List<DayInfo> days = new ArrayList<>();
 
@@ -84,10 +78,7 @@ public class PerformanceDetail {
     @ElementCollection
     @CollectionTable(
             name = "fes_slots",
-            joinColumns = @JoinColumn(
-                    name = "performance_mt20id",
-                    referencedColumnName = "mt20id"
-            )
+            joinColumns = @JoinColumn(name = "performance_id")
     )
     @OrderBy("date ASC, stageOrder ASC, start ASC")
     private List<Slot> slots = new ArrayList<>();
@@ -96,10 +87,7 @@ public class PerformanceDetail {
     @ElementCollection
     @CollectionTable(
             name = "fes_links",
-            joinColumns = @JoinColumn(
-                    name = "performance_mt20id",
-                    referencedColumnName = "mt20id"
-            )
+            joinColumns = @JoinColumn(name = "performance_id")
     )
     private List<Relate> fesLinks = new ArrayList<>();
 
@@ -107,34 +95,34 @@ public class PerformanceDetail {
     @ElementCollection
     @CollectionTable(
             name = "fes_artist_pics",
-            joinColumns = @JoinColumn(
-                    name = "performance_mt20id",
-                    referencedColumnName = "mt20id"
-            )
+            joinColumns = @JoinColumn(name = "performance_id")
     )
     private List<ArtistPic> artistPics = new ArrayList<>();
 
 
     // ===================================================================
-    // Embeddable 클래스
+    // Embeddable 클래스 (값 타입)
     // ===================================================================
 
     @Embeddable
-    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+    @Getter @Setter
+    @NoArgsConstructor @AllArgsConstructor @Builder
     public static class Relate {
         private String relatenm;
         private String relateurl;
     }
 
     @Embeddable
-    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+    @Getter @Setter
+    @NoArgsConstructor @AllArgsConstructor @Builder
     public static class ArtPic {
         private String relatenm;
         private String relateurl;
     }
 
     @Embeddable
-    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+    @Getter @Setter
+    @NoArgsConstructor @AllArgsConstructor @Builder
     public static class DayInfo {
         @Column(nullable = false)
         private LocalDate date;
@@ -143,7 +131,8 @@ public class PerformanceDetail {
     }
 
     @Embeddable
-    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+    @Getter @Setter
+    @NoArgsConstructor @AllArgsConstructor @Builder
     public static class Slot {
         @Column(nullable = false)
         private LocalDate date;
@@ -173,7 +162,8 @@ public class PerformanceDetail {
     }
 
     @Embeddable
-    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+    @Getter @Setter
+    @NoArgsConstructor @AllArgsConstructor @Builder
     public static class ArtistPic {
         private LocalDate date;
         private String relatenm;
