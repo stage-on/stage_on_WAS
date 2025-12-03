@@ -11,6 +11,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class PerformanceDataInitializer {
     private final JdbcTemplate jdbcTemplate;
 
     // ★ ApplicationReadyEvent → PostConstruct 로 변경
+    @Transactional
     @PostConstruct
     public void init() {
 
@@ -2839,6 +2841,12 @@ public class PerformanceDataInitializer {
                         .build()
         );
         repository.saveAll(data);
+        repository.save(fes);
+        repository.save(bml);
+        repository.save(dmz);
+        repository.save(apf);
+        repository.save(bml);
+
         System.out.println(" 공연 더미데이터 초기화 완료 (" + data.size() + "건)");
     }
 }
