@@ -14,7 +14,6 @@ import com.stageon.stageonwas.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.stageon.stageonwas.domain.alonecon.dto.PerformancePeriodDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +49,7 @@ public class PerformanceLikeService {
     // 공연 좋아요 취소 (MY CONCERTS 삭제)
     public void unlikePerformance(Long userId, Long performanceId) {
         // 검증로직
-        likeValidationService.checkMinLikes(userId);
+        likeValidationService.checkMinLikes(userId,1);
 
         UserPerformanceLikeId id = new UserPerformanceLikeId(userId, performanceId);
 
