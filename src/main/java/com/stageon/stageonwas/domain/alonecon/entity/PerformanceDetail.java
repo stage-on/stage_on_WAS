@@ -41,7 +41,9 @@ public class PerformanceDetail {
     private LocalTime tksttime;
     private Integer typeofcon;
     private boolean newstate;
+    @Column(columnDefinition = "TEXT")
     private String locationUrl;
+
 
     // ===================================================================
     // 🎫 공연 관련 (일반 Relate / ArtPic)
