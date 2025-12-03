@@ -24,14 +24,14 @@ public class LikeValidationService {
 
     public void checkMaxLikes(Long userId) {
         long totalLikes = getTotalLikes(userId);
-        if (totalLikes > 10) {
+        if (totalLikes >= 50) {
             throw new CustomException(ErrorCode.LIKE_LIMIT_EXCEEDED);
         }
     }
 
-    public void checkMinLikes(Long userId) {
+    public void checkMinLikes(Long userId, int countToDelete) {
         long totalLikes = getTotalLikes(userId);
-        if (totalLikes < 2) {
+        if (totalLikes - countToDelete < 2) {
             throw new CustomException(ErrorCode.LIKE_MIN_REQUIRED);
         }
     }
