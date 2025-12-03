@@ -18,6 +18,7 @@ public class SearchPerformanceResDto {
     private final List<String> artistNames;
     @Schema(description = "로그인한 유저의 좋아요 여부", example = "true")
     private final boolean isLiked;
+    private final String mt20id;
 
     public SearchPerformanceResDto(PerformanceDetail performance,boolean isLiked) {
         this.performanceId = performance.getId();
@@ -28,6 +29,7 @@ public class SearchPerformanceResDto {
         this.artistNames = performance.getStyurls().stream()
                 .map(PerformanceDetail.ArtPic::getRelatenm)
                 .collect(Collectors.toList());
+        this.mt20id = performance.getMt20id();
         this.isLiked = isLiked;
     }
 }
