@@ -22,7 +22,7 @@ public interface ArtistLikeApi {
 
     @Operation(
             summary = "아티스트 좋아요 등록 (My Band 추가)",
-            description = "사용자가 특정 아티스트에 좋아요를 등록합니다. (최대 5개 제한)"
+            description = "사용자가 특정 아티스트에 좋아요를 등록합니다. (아티스트 + 공연 최대 50개 제한)"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "좋아요 등록 성공",

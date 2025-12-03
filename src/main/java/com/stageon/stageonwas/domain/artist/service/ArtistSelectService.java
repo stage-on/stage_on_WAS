@@ -25,8 +25,7 @@ public class ArtistSelectService {
             artistLikeService.likeArtist(userId, artistId);
         }
 
-        likeValidationService.checkMaxLikes(userId); // 10개 초과 체크
-        likeValidationService.checkMinLikes(userId); // 2개 미만 체크
+        likeValidationService.checkMinLikes(userId,0); // 2개 미만 체크
 
 
         User user = userRepository.findById(userId)

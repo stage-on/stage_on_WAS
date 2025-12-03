@@ -53,10 +53,11 @@ public class ArtistLikeService {
     // 아티스트 좋아요 취소 (MY BANDS 삭제)
     public void unlikeArtist(Long userId, List<Long> artistIds) {
         // 검증로직
-        likeValidationService.checkMinLikes(userId);
+        int deleteCount = artistIds.stream().distinct().toList().size();
+        likeValidationService.checkMinLikes(userId, deleteCount);
         int requestSize = artistIds.stream().distinct().toList().size();
         long deletedCount = userArtistLikeRepository.deleteAllByUserUserIdAndArtistIdIn(userId, artistIds);
-        if (deletedCount != requestSize) {
+        if (deletedCount != requestSize) { // 요청한 수와 실제 지워진 수가 다를때 (존재하지 않는걸 지우려시도)
             throw new CustomException(ErrorCode.LIKE_NOT_FOUND);
         }
 
