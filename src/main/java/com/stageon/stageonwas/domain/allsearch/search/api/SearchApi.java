@@ -42,6 +42,7 @@ public interface SearchApi {
                                                     "artistNames": [
                                                         "검정치마"
                                                     ],
+                                                    "mt20id" : PF123
                                                     "liked": false
                                                 },
                                                 {
@@ -53,6 +54,7 @@ public interface SearchApi {
                                                     "artistNames": [
                                                         "검정치마"
                                                     ],
+                                                    "mt20id" : PF123
                                                     "liked": false
                                                 }
                                             ]
