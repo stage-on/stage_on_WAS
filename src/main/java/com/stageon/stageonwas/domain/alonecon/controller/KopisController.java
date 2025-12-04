@@ -47,9 +47,50 @@ public class KopisController {
     private final PerformanceDetailRepository performanceRepo;
 
     private final MyBandPerformanceService myBandPerformanceService;
-    // ===========================
-// 🎤 아티스트 이름 검색 - 기간 DTO 전용
-// ===========================
+    @Operation(
+            summary = "페스티벌(타입 2) 공연만 전체 조회",
+            description = """
+                    로컬 DB에 저장된 공연 중에서 typeofcon = 2 인 것만 모아서 반환합니다.
+                    (즉, 페스티벌 전용 리스트)
+                    
+                    - 프론트에서는 PerformanceFestivalDto 를 사용하면 됩니다.
+                    """
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "페스티벌 목록 조회 성공",
+                    content = @Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = PerformanceFestivalDto.class))
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "페스티벌 데이터 없음",
+                    content = @Content
+            )
+    })
+    @GetMapping("/performances/festivals")
+    public ResponseEntity<List<PerformanceFestivalDto>> getAllFestivals() {
+
+        // typeofcon = 2 인 것만 조회
+        List<PerformanceDetail> festivals =
+                performanceRepo.findByTypeofcon(2);
+
+        if (festivals.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204
+        }
+
+        // 엔티티 → DTO 변환
+        List<PerformanceFestivalDto> result = festivals.stream()
+                .map(PerformanceFestivalDto::new)
+                .toList();
+
+        return ResponseEntity.ok(result);
+    }
+
+
     @Operation(
             summary = "내가 좋아요한 밴드 공연 섹션 조회",
             description = """

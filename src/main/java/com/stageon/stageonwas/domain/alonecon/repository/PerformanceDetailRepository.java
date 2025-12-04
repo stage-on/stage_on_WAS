@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface PerformanceDetailRepository extends JpaRepository<PerformanceDetail, Long> {
     List<PerformanceDetail> findByPrfnmContaining(String keyword);
     Optional<PerformanceDetail> findByMt20id(String mt20id);
+    List<PerformanceDetail> findByTypeofcon(Integer typeofcon);
 
     List<PerformanceDetail> findTop50ByPrfnmContainingIgnoreCaseOrderByPrfpdfromDesc(String prfnm);
 
