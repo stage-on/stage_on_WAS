@@ -31,13 +31,21 @@ public class PerformanceDataInitializer {
     @Transactional
     @PostConstruct
     public void init() {
-
+        jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS = 0");
+        jdbcTemplate.execute("TRUNCATE TABLE fes_artist_pics");
+        jdbcTemplate.execute("TRUNCATE TABLE fes_links");
+        jdbcTemplate.execute("TRUNCATE TABLE fes_slots");
+        jdbcTemplate.execute("TRUNCATE TABLE fes_days");
+        jdbcTemplate.execute("TRUNCATE TABLE performance_styurls");
+        jdbcTemplate.execute("TRUNCATE TABLE performance_relates");
+        jdbcTemplate.execute("TRUNCATE TABLE performance_detail");
+        jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS = 1");
         // ★ 이미 데이터가 있으면 초기화 스킵 (중복 / 에러 방지)
-        long count = repository.count();
-        if (count > 0) {
-            System.out.println("공연 더미데이터가 이미 존재합니다. (총 " + count + "건) 초기화 스킵");
-            return;
-        }
+//        long count = repository.count();
+//        if (count > 0) {
+//            System.out.println("공연 더미데이터가 이미 존재합니다. (총 " + count + "건) 초기화 스킵");
+//            return;
+//        }
 
         // ★ 더 이상 deleteAll / AUTO_INCREMENT reset 하지 않음
         // repository.deleteAll();
@@ -574,7 +582,7 @@ public class PerformanceDataInitializer {
 
 // 안내 기준으로 13:00 ~ 22:00 정도로 세팅 (원하면 여기 시간만 나중에 조정해도 됨)
         dmz.setDays(List.of(
-                new DayInfo(dmzD1, LocalTime.of(13, 0), LocalTime.of(24, 0)),
+                new DayInfo(dmzD1, LocalTime.of(13, 0), LocalTime.of(00, 0)),
                 new DayInfo(dmzD2, LocalTime.of(13, 0), LocalTime.of(22, 0))
         ));
 
@@ -612,7 +620,7 @@ public class PerformanceDataInitializer {
         dmzAll.add(new Slot(dmzD1,"PEACE","Peace Stage",2,"김민규",
                 LocalTime.of(21,45), LocalTime.of(22,35),50,null,null));
         dmzAll.add(new Slot(dmzD1,"PEACE","Peace Stage",2,"KO SHIN MOON",
-                LocalTime.of(23,55),LocalTime.of(24,15),20,null,null));
+                LocalTime.of(23,55),LocalTime.of(00,15),20,null,null));
 
 
         /* ---------- 6/15 (일) ---------- */
@@ -2814,7 +2822,7 @@ public class PerformanceDataInitializer {
                         .build(),
 
                 PerformanceDetail.builder()
-                        .mt20id("PF274608")
+                        .mt20id("PF263895")
                         .prfnm("라우브 내한공연 Lauv's I Love You, Mean It Tour [대구]")
                         .prfpdfrom(LocalDate.of(2025,5,24))
                         .prfpdto(LocalDate.of(2025,5,25))
@@ -2822,7 +2830,7 @@ public class PerformanceDataInitializer {
                         .prfruntime("2시간")
                         .prfage("만 11세 이상")
                         .pcseguidance("스탠딩  154,000원, SR  165,000원, R석 154,000원")
-                        .poster("http://www.kopis.or.kr/upload/pfmPoster/PF_PF274608_250922_113849.gif")
+                        .poster("http://www.kopis.or.kr/upload/pfmPoster/PF_PF263895_250425_135006.gif")
                         .prfstate("공연완료")
                         .dtguidance("토요일 ~ 일요일(17:00)")
                         .tkstdate(null)
