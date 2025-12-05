@@ -67,9 +67,9 @@ public class FestivalTimetableController {
     @Operation(
             summary = "타임테이블 커스텀 저장",
             description = """
-                    특정 페스티벌(mt20id)에 대해 유저가 선택한 슬롯(색상 반전 여부)을 저장합니다.
-                    같은 공연에 대해 기존에 저장된 커스텀 데이터는 모두 삭제한 뒤, 새로 저장합니다.
-                    """
+                특정 페스티벌(mt20id)에 대해 유저가 선택한 슬롯(색상 반전 여부)을 저장합니다.
+                같은 공연에 대해 기존에 저장된 커스텀 데이터는 모두 삭제한 뒤, 새로 저장합니다.
+                """
     )
     @ApiResponse(
             responseCode = "200",
@@ -86,9 +86,11 @@ public class FestivalTimetableController {
             )
             @RequestBody SlotCustomSaveRequest request,
 
-            @Parameter(description = "유저 ID", example = "1")
-            @RequestParam Long userId
+            @Parameter(hidden = true)
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
+
+        Long userId = userDetails.getUser().getUserId();   // 🔥 여기서 userId 가져옴
 
         PerformanceDetail fes = performanceDetailRepository.findByMt20id(mt20id)
                 .orElseThrow(() -> new RuntimeException("공연을 찾을 수 없음 : " + mt20id));
@@ -118,6 +120,7 @@ public class FestivalTimetableController {
 
         return ResponseEntity.ok().build();
     }
+
 
     // ==================== 3) 상세 조회 + 커스텀 정보 ====================
     @GetMapping("/{mt20id}/detail")
