@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class FestivalTimetableController {
 
     // ==================== 2) 커스텀 저장 (POST) ====================
     @PostMapping("/{mt20id}/custom-slots")
+    @Transactional
     @Operation(
             summary = "타임테이블 커스텀 저장",
             description = """
