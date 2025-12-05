@@ -63,6 +63,58 @@ public class FestivalTimetableController {
         return ResponseEntity.ok(festivals);
     }
 
+    @GetMapping("/{mt20id}/my-detail")
+    @Operation(
+            summary = "로그인 유저 기준 페스티벌 상세 + 슬롯 반전 여부 조회",
+            description = """
+                seed로 저장된 페스티벌 타임테이블(slots)에
+                현재 로그인한 유저의 커스텀 정보(색상 반전 여부)가 있으면 합쳐서 반환합니다.
+                (커스텀이 없으면 seed 그대로 반환)
+                """
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "상세 정보 + inverted 정보",
+            content = @Content(schema = @Schema(implementation = PerformanceDetailResponse.class))
+    )
+    public ResponseEntity<PerformanceDetailResponse> getMyFestivalDetail(
+            @Parameter(description = "KOPIS 공연 ID", example = "PF263558")
+            @PathVariable String mt20id,
+
+            @Parameter(hidden = true)
+            @AuthenticationPrincipal CustomUserDetails userDetails   // ✅ 토큰에서 유저 정보
+    ) {
+        // 1) 로그인 유저 ID
+        Long userId = userDetails.getUser().getUserId();
+
+        // 2) 공연 기본 정보 (seed)
+        PerformanceDetail fes = performanceDetailRepository.findByMt20id(mt20id)
+                .orElseThrow(() -> new RuntimeException("공연을 찾을 수 없음 : " + mt20id));
+
+        Long performanceId = fes.getId();
+
+        // 3) 이 유저가 이 공연에 대해 저장한 커스텀 슬롯들
+        List<UserSlotCustom> customs =
+                userSlotCustomRepository.findByIdUserIdAndIdPerformanceId(userId, performanceId);
+
+        // 4) (날짜 + stageOrder + artist) → inverted 여부로 맵핑
+        Map<String, Boolean> invertedMap = customs.stream()
+                .collect(Collectors.toMap(
+                        c -> PerformanceDetailResponse.slotKey(
+                                c.getId().getSlotDate(),
+                                c.getId().getStageOrder(),
+                                c.getId().getArtist()
+                        ),
+                        UserSlotCustom::isInverted
+                ));
+
+        // 5) seed + inverted 정보를 합쳐서 DTO 생성
+        PerformanceDetailResponse response =
+                PerformanceDetailResponse.from(fes, invertedMap);   // ✅ 기존 메서드 그대로 사용
+
+        return ResponseEntity.ok(response);
+    }
+
     // ==================== 2) 커스텀 저장 (POST) ====================
     @PostMapping("/{mt20id}/custom-slots")
     @Transactional
