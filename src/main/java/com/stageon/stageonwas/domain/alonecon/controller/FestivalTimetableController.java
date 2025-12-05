@@ -140,9 +140,10 @@ public class FestivalTimetableController {
             @Parameter(description = "KOPIS 공연 ID", example = "PF263558")
             @PathVariable String mt20id,
 
-            @Parameter(description = "유저 ID", example = "1")
-            @RequestParam Long userId
+            @Parameter(hidden = true)
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
+        Long userId = userDetails.getUser().getUserId();   // 🔥 여기서 가져오기
 
         PerformanceDetail fes = performanceDetailRepository.findByMt20id(mt20id)
                 .orElseThrow(() -> new RuntimeException("공연을 찾을 수 없음 : " + mt20id));
