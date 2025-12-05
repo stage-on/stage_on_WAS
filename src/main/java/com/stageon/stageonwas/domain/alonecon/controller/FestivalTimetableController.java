@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/festivals")
+@RequestMapping("/api/v1/festivals")
 @RequiredArgsConstructor
 @Tag(name = "Festival Timetable", description = "페스티벌 타임테이블 / 커스텀 관련 API")
 public class FestivalTimetableController {
