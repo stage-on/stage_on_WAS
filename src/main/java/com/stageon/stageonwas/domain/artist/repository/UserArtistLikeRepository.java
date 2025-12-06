@@ -10,8 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface UserArtistLikeRepository extends JpaRepository<UserArtistLike, UserArtistLikeId> {
-    // 특정 유저가 좋아요 누른 아티스트 목록 조회
-    // JPQL을 사용하여 'N+1 문제'를 방지하는 fetch join
+
     @Query("SELECT ual FROM UserArtistLike ual " +
             "JOIN FETCH ual.artist a " +
             "WHERE ual.user.userId = :userId")
@@ -24,7 +23,7 @@ public interface UserArtistLikeRepository extends JpaRepository<UserArtistLike, 
     @Query("select ual.artist from UserArtistLike ual where ual.user.userId = :userId")
     List<Artist> findLikedArtistsByUserId(@Param("userId") Long userId);
 
-    // 검색시 아티스트 좋아요가 되어있는지 확인시 필요
+
     @Query("SELECT ual.id.artistId FROM UserArtistLike ual WHERE ual.id.userId = :userId")
     List<Long> findArtistIdsByUserId(@Param("userId") Long userId);
 }

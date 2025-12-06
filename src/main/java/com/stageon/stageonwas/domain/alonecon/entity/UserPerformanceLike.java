@@ -28,7 +28,7 @@ public class UserPerformanceLike {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("performanceId")
-    @JoinColumn(name = "performance_id") // performance_detail id(PK)를 참조
+    @JoinColumn(name = "performance_id")
     private PerformanceDetail performance;
 
     public UserPerformanceLike(User user, PerformanceDetail performanceDetail) {

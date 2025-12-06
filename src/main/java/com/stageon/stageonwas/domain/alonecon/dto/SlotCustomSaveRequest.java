@@ -12,10 +12,9 @@ import java.util.List;
 @Builder
 public class SlotCustomSaveRequest {
 
-    // 선택: pathVariable로도 받으니까 굳이 안 써도 됨
+
     private String mt20id;
 
-    // 반전 정보들 전체
     private List<SlotCustomItem> invertedSlots;
 
     @Getter

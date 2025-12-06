@@ -9,5 +9,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ArtistSelectReqDto {
     @Schema(description = "아티스트 ID 리스트", example = "[133, 134, 135]")
-    private List<Long> artistIds; // 선택한 아티스트 ID 리스트
+    private List<Long> artistIds;
 }

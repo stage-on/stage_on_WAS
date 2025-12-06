@@ -20,13 +20,13 @@ public class Artist {
     private String bandName;
 
     @Column(name = "relate_url")
-    private String relateUrl; // 밴드 사진 URL
+    private String relateUrl;
 
     @Column(name = "session_mem")
-    private String sessionMem; // 밴드 구성원
+    private String sessionMem;
 
     @Column(name = "intro_band")
-    private String introBand; // 밴드 소개
+    private String introBand;
 
     @Column(name = "type_of_artist")
     private Integer typeofartist;

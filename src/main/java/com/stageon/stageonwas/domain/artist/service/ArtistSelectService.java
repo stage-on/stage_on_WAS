@@ -15,17 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArtistSelectService {
     private final UserRepository userRepository;
-    private final ArtistLikeService artistLikeService;         // 좋아요 저장 담당
-    private final LikeValidationService likeValidationService; // 개수 검증 담당
+    private final ArtistLikeService artistLikeService;
+    private final LikeValidationService likeValidationService;
 
-    @Transactional // 하나라도 실패하면 전체 롤백
+    @Transactional
     public void selectArtists(Long userId, List<Long> artistIds) {
 
         for (Long artistId : artistIds) {
             artistLikeService.likeArtist(userId, artistId);
         }
 
-        likeValidationService.checkMinLikes(userId,0); // 2개 미만 체크
+        likeValidationService.checkMinLikes(userId,0);
 
 
         User user = userRepository.findById(userId)

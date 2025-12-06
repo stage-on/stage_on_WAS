@@ -21,7 +21,7 @@ public class PerformanceDetailResponse {
     private String fcltynm;
     private String locationUrl;
 
-    private boolean hasCustom; // 이 공연을 커스텀한 적 있는지
+    private boolean hasCustom;
 
     private List<FesDayResponse> days;
     private List<FesSlotResponse> slots;

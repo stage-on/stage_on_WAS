@@ -16,5 +16,5 @@ public class UserSlotCustom {
     private UserSlotCustomId id;
 
     @Column(nullable = false)
-    private boolean inverted; // true면 색상 반전
+    private boolean inverted;
 }

@@ -28,7 +28,7 @@ public class KopisService {
     private final PerformanceDetailRepository performanceRepo;
     private final ObjectMapper objectMapper;
 
-    /** 단건(압축) – 예전처럼 Mono 버전 */
+
     @Transactional
     public Mono<ObjectNode> getCompactOne(String mt20id) {
         String trimmed = mt20id.trim();
@@ -36,7 +36,7 @@ public class KopisService {
         return Mono.fromCallable(() ->
                 performanceRepo.findByMt20id(trimmed)
                         .orElseGet(() -> {
-                            // 없으면 KOPIS에서 가져와서 저장
+
                             String xml = kopisClient.fetchDetailXml(trimmed)
                                     .block(Duration.ofSeconds(8));
 
@@ -48,7 +48,7 @@ public class KopisService {
         ).map(this::toCompactObjectNode);
     }
 
-    /** 다건(압축) – GET, POST 둘 다 여기 사용 */
+
     @Transactional
     public Mono<ObjectNode> getCompactMany(List<String> ids) {
         return Flux.fromIterable(ids)
@@ -63,7 +63,7 @@ public class KopisService {
                 });
     }
 
-    // ================= XML → 엔티티 (임시 더미 구현) =================
+
     private PerformanceDetail convertXmlToEntity(String xml) {
         // TODO: 실제 XML 파싱 로직으로 교체
         return PerformanceDetail.builder()
@@ -82,7 +82,7 @@ public class KopisService {
                 .build();
     }
 
-    // ================= 엔티티 → compact JSON =================
+
     private ObjectNode toCompactObjectNode(PerformanceDetail p) {
         ObjectNode node = objectMapper.createObjectNode();
 

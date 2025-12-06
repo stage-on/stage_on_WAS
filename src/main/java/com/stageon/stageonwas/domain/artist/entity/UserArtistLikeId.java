@@ -12,7 +12,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-// 아티스트 좋아요 ID 클래스 (복합 PK용)
+
 public class UserArtistLikeId implements Serializable {
     private Long userId;
     private Long artistId;
