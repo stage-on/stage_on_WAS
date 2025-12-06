@@ -1,4 +1,5 @@
 package com.stageon.stageonwas.domain.alonecon.controller;
+import com.stageon.stageonwas.domain.alonecon.repository.UserPerformanceLikeRepository;
 import com.stageon.stageonwas.domain.alonecon.service.MyBandPerformanceService;
 import com.stageon.stageonwas.domain.alonecon.dto.MyBandPerformanceSectionDto;
 import com.stageon.stageonwas.security.details.CustomUserDetails;
@@ -19,9 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 // ===== Swagger/OpenAPI =====
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,6 +44,7 @@ public class KopisController {
 
     private final KopisService svc;
     private final PerformanceDetailRepository performanceRepo;
+    private final UserPerformanceLikeRepository userPerformanceLikeRepository;
 
     private final MyBandPerformanceService myBandPerformanceService;
     @Operation(
@@ -71,10 +71,12 @@ public class KopisController {
                     content = @Content
             )
     })
-    @GetMapping("/performances/festivals")
-    public ResponseEntity<List<PerformanceFestivalDto>> getAllFestivals() {
 
-        // typeofcon = 2 인 것만 조회
+    @GetMapping("/performances/festivals")
+    public ResponseEntity<List<PerformanceFestivalDto>> getAllFestivals(
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        // 1) typeofcon = 2 인 것만 조회
         List<PerformanceDetail> festivals =
                 performanceRepo.findByTypeofcon(2);
 
@@ -82,9 +84,23 @@ public class KopisController {
             return ResponseEntity.noContent().build(); // 204
         }
 
-        // 엔티티 → DTO 변환
+        // 2) 로그인 유저 id (비로그인일 수 있으니 null 체크)
+        Long userId = (userDetails == null) ? null : userDetails.getId();
+
+        // 3) 이 유저가 좋아요한 공연 id 목록 조회
+        Set<Long> likedIdSet = new HashSet<>();
+        if (userId != null) {
+            List<Long> likedIds =
+                    userPerformanceLikeRepository.findPerformanceIdsByUserId(userId);
+            likedIdSet.addAll(likedIds);
+        }
+
+        // 4) 엔티티 → DTO 변환 + liked 세팅
         List<PerformanceFestivalDto> result = festivals.stream()
-                .map(PerformanceFestivalDto::new)
+                .map(p -> new PerformanceFestivalDto(
+                        p,
+                        likedIdSet.contains(p.getId())   // 🔥 여기서 true/false 결정
+                ))
                 .toList();
 
         return ResponseEntity.ok(result);

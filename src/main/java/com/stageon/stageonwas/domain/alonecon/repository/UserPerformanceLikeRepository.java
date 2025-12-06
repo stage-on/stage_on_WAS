@@ -1,4 +1,9 @@
 package com.stageon.stageonwas.domain.alonecon.repository;
+import com.stageon.stageonwas.domain.alonecon.repository.UserPerformanceLikeRepository;
+// (패키지 경로는 실제 프로젝트 구조에 맞게 조정)
+
+import java.util.HashSet;
+import java.util.Set;
 
 import com.stageon.stageonwas.domain.alonecon.entity.PerformanceDetail;
 import com.stageon.stageonwas.domain.alonecon.entity.UserPerformanceLike;

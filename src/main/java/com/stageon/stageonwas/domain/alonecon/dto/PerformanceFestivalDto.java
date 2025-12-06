@@ -37,6 +37,7 @@ public class PerformanceFestivalDto {
     private Integer typeofcon;
     private boolean newstate;
     private String locationUrl;
+    private boolean liked;
 
     // 공연/공통 관련 컬렉션
     private List<PerformanceDetail.ArtPic> styurls;
@@ -74,5 +75,10 @@ public class PerformanceFestivalDto {
         this.slots = p.getSlots();
         this.fesLinks = p.getFesLinks();
         this.artistPics = p.getArtistPics();
+        this.liked = false;
+    }
+    public PerformanceFestivalDto(PerformanceDetail p, boolean liked) {
+        this(p);              // 위 생성자 먼저 호출
+        this.liked = liked;   // 그 다음 liked 덮어쓰기
     }
 }
