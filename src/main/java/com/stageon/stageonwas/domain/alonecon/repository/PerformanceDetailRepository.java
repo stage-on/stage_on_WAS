@@ -17,11 +17,7 @@ public interface PerformanceDetailRepository extends JpaRepository<PerformanceDe
 
     List<PerformanceDetail> findTop50ByPrfnmContainingIgnoreCaseOrderByPrfpdfromDesc(String prfnm);
 
-    /**
-     * ✅ 예전에 쓰던 메서드 이름 그대로 유지
-     *   - 콘서트: styurls.relatenm 에 아티스트명 포함
-     *   - 페스티벌: slots.artist 또는 artistPics.relatenm 에 아티스트명 포함
-     */
+
     @Query("""
         select distinct p
         from PerformanceDetail p

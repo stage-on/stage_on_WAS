@@ -13,10 +13,10 @@ import java.time.LocalDate;
 @Builder
 public class PerformancePeriodDto {
 
-    // 공연 ID (mt20id)
+
     private String mt20id;
 
-    // 공연 제목
+
     private String prfnm;
 
     private LocalDate prfpdfrom;

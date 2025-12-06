@@ -28,21 +28,19 @@ public class ArtistLikeService {
     private final LikeValidationService likeValidationService; // 좋아요 2~10개 검증을 위함
 
 
-    // 아티스트 좋아요 (MY BANDS 추가)
     public void likeArtist(Long userId, Long artistId) {
-        // 검증로직
+
         likeValidationService.checkMaxLikes(userId);
 
-        // 실제 유저와 아티스트가 존재하는지 확인
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         Artist artist = artistRepository.findById(artistId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ARTIST_NOT_FOUND));
 
-        // 복합 PK 객체 생성
+
         UserArtistLikeId id = new UserArtistLikeId(userId, artistId);
 
-        // 이미 좋아요를 눌렀는지 확인 (중복 방지)
+
         if (userArtistLikeRepository.existsById(id)) {
             throw new CustomException(ErrorCode.ALREADY_LIKED);
         }
@@ -50,20 +48,20 @@ public class ArtistLikeService {
         userArtistLikeRepository.save(new UserArtistLike(user, artist));
     }
 
-    // 아티스트 좋아요 취소 (MY BANDS 삭제)
+
     public void unlikeArtist(Long userId, List<Long> artistIds) {
         // 검증로직
         int deleteCount = artistIds.stream().distinct().toList().size();
         likeValidationService.checkMinLikes(userId, deleteCount);
         int requestSize = artistIds.stream().distinct().toList().size();
         long deletedCount = userArtistLikeRepository.deleteAllByUserUserIdAndArtistIdIn(userId, artistIds);
-        if (deletedCount != requestSize) { // 요청한 수와 실제 지워진 수가 다를때 (존재하지 않는걸 지우려시도)
+        if (deletedCount != requestSize) {
             throw new CustomException(ErrorCode.LIKE_NOT_FOUND);
         }
 
     }
 
-    // 내 밴드 목록 조회
+
     @Transactional(readOnly = true)
     public List<ArtistLikeResDto> getMyBands(Long userId) {
         return userArtistLikeRepository.findAllWithArtistByUserId(userId)

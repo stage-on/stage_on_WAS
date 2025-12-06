@@ -10,8 +10,8 @@ public class MyBandPerformanceSectionDto {
 
     private final Long artistId;
     private final String artistName;
-    private final String artistImageUrl;   // Artist.relateUrl
-    private final List<PerformancePeriodDto> performances; // 🔥 여기 타입 중요
+    private final String artistImageUrl;
+    private final List<PerformancePeriodDto> performances;
 
     public MyBandPerformanceSectionDto(Artist artist, List<PerformancePeriodDto> performances) {
         this.artistId = artist.getId();

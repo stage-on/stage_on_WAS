@@ -28,9 +28,9 @@ public class PerformanceLikeService {
     private final PerformanceDetailRepository performanceRepository;
     private final LikeValidationService likeValidationService;
 
-    // 공연 좋아요 (MY CONCERTS 추가)
+
     public void likePerformance(Long userId, Long performanceId) {
-        // 검증로직
+
         likeValidationService.checkMaxLikes(userId);
 
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -46,9 +46,9 @@ public class PerformanceLikeService {
     }
 
 
-    // 공연 좋아요 취소 (MY CONCERTS 삭제)
+
     public void unlikePerformance(Long userId, Long performanceId) {
-        // 검증로직
+
         likeValidationService.checkMinLikes(userId,1);
 
         UserPerformanceLikeId id = new UserPerformanceLikeId(userId, performanceId);
@@ -59,7 +59,7 @@ public class PerformanceLikeService {
         userPerformanceLikeRepository.deleteById(id);
     }
 
-    // 내 공연 목록 조회
+
     @Transactional(readOnly = true)
     public List<PerformanceLikeResDto> getMyConcerts(Long userId) {
         return userPerformanceLikeRepository.findAllWithPerformanceByUserId(userId)
@@ -69,7 +69,7 @@ public class PerformanceLikeService {
     }
 
 
-    // 2) 좋아요 누른 공연들 중에서 typeofcon == 2 인 것만 반환
+
     @Transactional(readOnly = true)
     public List<PerformanceLikeResDto> getMyFestivalConcerts(Long userId) {
         return userPerformanceLikeRepository.findAllWithPerformanceByUserId(userId)

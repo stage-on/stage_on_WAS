@@ -19,7 +19,7 @@ public class PerformanceDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // === 공통 기본 정보 ===
+
     @Column(nullable = false, unique = true)
     private String mt20id;
 
@@ -45,16 +45,13 @@ public class PerformanceDetail {
     private String locationUrl;
 
 
-    // ===================================================================
-    // 🎫 공연(콘서트) 관련
-    // ===================================================================
-    @Builder.Default
+   @Builder.Default
     @ElementCollection
     @CollectionTable(
             name = "performance_styurls",
             joinColumns = @JoinColumn(
-                    name = "performance_mt20id",       // FK 컬럼명
-                    referencedColumnName = "mt20id"    // 부모 엔티티 컬럼명
+                    name = "performance_mt20id",
+                    referencedColumnName = "mt20id"
             )
     )
     private List<ArtPic> styurls = new ArrayList<>();
@@ -70,9 +67,6 @@ public class PerformanceDetail {
     )
     private List<Relate> relates = new ArrayList<>();
 
-    /// ===================================================================
-    // 🎤 페스티벌 관련
-    // ===================================================================
     @Builder.Default
     @ElementCollection
     @CollectionTable(
@@ -119,9 +113,6 @@ public class PerformanceDetail {
     private List<ArtistPic> artistPics = new ArrayList<>();
 
 
-    // ===================================================================
-    // Embeddable 클래스
-    // ===================================================================
 
     @Embeddable
     @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder

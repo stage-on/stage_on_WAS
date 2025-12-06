@@ -14,24 +14,24 @@ public class PerformanceLikeResDto {
     private final Long performanceId;
 
     @Schema(description = "공연제목", example = "검정치마 단독공연")
-    private final String title; // prfnm
+    private final String title;
 
     @Schema(description = "포스터 URL", example = "https://~")
-    private final String posterUrl; // poster
+    private final String posterUrl;
 
     @Schema(description = "공연 시작일", example = "2025-12-20")
-    private final LocalDate prfpdfrom; //공연 시작일
+    private final LocalDate prfpdfrom;
 
     @Schema(description = "공연 종료일", example = "2025-12-21")
-    private final LocalDate prfpdto; //공연 종료일
+    private final LocalDate prfpdto;
 
     @Schema(description = "공연 장소", example = "일산 킨텍스")
-    private final String fcltynm; //공연 장소
+    private final String fcltynm;
 
     @Schema(description = "mt20id", example = "PF123")
     private final String mt20id;
 
-    private boolean liked;
+
 
     public PerformanceLikeResDto(PerformanceDetail performance) {
         this.performanceId = performance.getId();

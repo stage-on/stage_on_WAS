@@ -21,12 +21,12 @@ public class UserArtistLike {
     private UserArtistLikeId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("userId") // UserArtistLikeId의 'userId' 필드에 매핑
+    @MapsId("userId")
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("artistId") // UserArtistLikeId의 'artistId' 필드에 매핑
+    @MapsId("artistId")
     @JoinColumn(name = "artist_id")
     private Artist artist;
 

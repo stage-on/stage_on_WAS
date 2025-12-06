@@ -21,7 +21,7 @@ public class FesSlotResponse {
     private Integer minutes;
     private String img;
     private String note;
-    private boolean inverted; // 색상 반전 여부
+    private boolean inverted;
 
     public static FesSlotResponse from(PerformanceDetail.Slot slot, boolean inverted) {
         return new FesSlotResponse(

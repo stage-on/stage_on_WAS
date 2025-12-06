@@ -19,7 +19,6 @@ public class ArtistInfoDataInitializer {
     @PostConstruct
     public void init() {
 
-        // 이미 데이터가 있으면 초기화 스킵
         if (repository.count() > 0) {
             System.out.println("밴드 데이터 초기화 스킵 (이미 존재)");
             return;

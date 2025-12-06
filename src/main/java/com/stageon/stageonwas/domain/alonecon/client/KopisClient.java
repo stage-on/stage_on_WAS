@@ -18,7 +18,6 @@ public class KopisClient {
         this.serviceKey = serviceKey;
     }
 
-    /** 상세 XML 원문 fetch (예전 그대로) */
     public Mono<String> fetchDetailXml(String mt20id) {
         return webClient.get()
                 .uri(b -> b.path("/pblprfr/{id}")
