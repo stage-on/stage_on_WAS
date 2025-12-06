@@ -599,8 +599,6 @@ public class PerformanceDataInitializer {
         dmzAll.add(new Slot(dmzD1,"LAND","Land Stage",1,"TELEPOPMUSIK (DJ SET)",
                 LocalTime.of(22,40), LocalTime.of(23,30),50,null,null));
 
-        dmzAll.add(new Slot(dmzD1,"LAND","Land Stage",1,"HITECH",
-                LocalTime.of(0,20), LocalTime.of(1,10),50,null,null));
 
 
         dmzAll.add(new Slot(dmzD1,"PEACE","Peace Stage",2,"사뮈",
@@ -613,9 +611,6 @@ public class PerformanceDataInitializer {
                 LocalTime.of(20,15), LocalTime.of(20,55),40,null,null));
         dmzAll.add(new Slot(dmzD1,"PEACE","Peace Stage",2,"김민규",
                 LocalTime.of(21,45), LocalTime.of(22,35),50,null,null));
-        dmzAll.add(new Slot(dmzD1,"PEACE","Peace Stage",2,"KO SHIN MOON",
-                LocalTime.of(23,55),LocalTime.of(00,15),20,null,null));
-
 
 
         dmzAll.add(new Slot(dmzD2,"LAND","Land Stage",1,"놀이도감",
@@ -655,14 +650,12 @@ public class PerformanceDataInitializer {
                 new ArtistPic(dmzD1, "MINAMI DEUTSGH", "https://i.scdn.co/image/ab67616100005174c811072c80372b2ce71dc0b6"),
                 new ArtistPic(dmzD1, "바보", "https://i.scdn.co/image/ab6761610000517427c199b958fe9fe72878044e"),
                 new ArtistPic(dmzD1, "TELEPOPMUSIK (DJ SET)", "https://i.scdn.co/image/ab67616100005174d179261028d531db338bc227"),
-                new ArtistPic(dmzD1, "HITECH", "https://i.scdn.co/image/ab676161000051741bb067080d7127c0156a5020"),
-
+               
                 new ArtistPic(dmzD1, "사뮈", "https://i.scdn.co/image/ab6761610000517404c9dd6e411a30e5a3fd8437"),
                 new ArtistPic(dmzD1, "THE CHAIRS", "https://i.scdn.co/image/ab676161000051747ae6d77815389271766a5551"),
                 new ArtistPic(dmzD1, "수민", "https://i.scdn.co/image/ab676161000051744b924be9b846ac20bfecc676"),
                 new ArtistPic(dmzD1, "김현철", "https://i.scdn.co/image/ab67616d00001e0201d0508f13c7fd7fbf459701"),
                 new ArtistPic(dmzD1, "김민규", "https://i.scdn.co/image/ab67616100005174c53e9ff3b9cc710cdc745fda"),
-                new ArtistPic(dmzD1, "KO SHIN MOON", "https://i.scdn.co/image/ab676161000051745eaa1dad6c99f500fdcf6d7e"),
 
 
                 new ArtistPic(dmzD2, "놀이도감", "https://i.scdn.co/image/ab676161000051740901b760be31d8c75b542a7e"),
