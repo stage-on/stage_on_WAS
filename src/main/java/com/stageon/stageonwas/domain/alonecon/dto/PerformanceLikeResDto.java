@@ -31,6 +31,8 @@ public class PerformanceLikeResDto {
     @Schema(description = "mt20id", example = "PF123")
     private final String mt20id;
 
+    private boolean liked;
+
     public PerformanceLikeResDto(PerformanceDetail performance) {
         this.performanceId = performance.getId();
         this.title = performance.getPrfnm();
