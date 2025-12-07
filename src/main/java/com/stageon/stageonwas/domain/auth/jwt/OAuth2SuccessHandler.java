@@ -23,7 +23,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
 
-    private static final String TARGET_URL = "https://stage-on-web.vercel.app/callback";
+    private static final String TARGET_URL = "http://localhost:5173/";
 
     @Override
     public void onAuthenticationSuccess(
