@@ -89,8 +89,9 @@ public class KopisController implements KopisApi {
     @Override
     @GetMapping("/performances/search/artist/period")
     public ResponseEntity<List<PerformancePeriodDto>> searchArtistPeriod(
-            @RequestParam("q") @NotBlank String keyword) {
-
+            @RequestParam("q") @NotBlank String keyword,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
         String q = keyword.trim();
 
         List<PerformanceDetail> list =
@@ -100,28 +101,48 @@ public class KopisController implements KopisApi {
             return ResponseEntity.noContent().build();
         }
 
+        Long userId = userDetails != null ? userDetails.getId() : null;
+        Set<Long> likedIdSet = new HashSet<>();
+
+        if (userId != null) {
+            likedIdSet.addAll(userPerformanceLikeRepository.findPerformanceIdsByUserId(userId));
+        }
+
         List<PerformancePeriodDto> result = list.stream()
-                .map(PerformancePeriodDto::new)
+                .map(p -> new PerformancePeriodDto(p, likedIdSet.contains(p.getId())))
                 .toList();
 
         return ResponseEntity.ok(result);
     }
 
 
+
     @Override
     @GetMapping("/performances/search/artist")
-    public ResponseEntity<List<?>> searchArtist(@RequestParam("q") String keyword) {
-
+    public ResponseEntity<List<?>> searchArtist(
+            @RequestParam("q") String keyword,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
         List<PerformanceDetail> list =
                 performanceRepo.findByArtistNameAnywhere(keyword.trim());
+
+
+        Long userId = (userDetails == null) ? null : userDetails.getId();
+        Set<Long> likedIdSet = new HashSet<>();
+        if (userId != null) {
+            likedIdSet.addAll(userPerformanceLikeRepository.findPerformanceIdsByUserId(userId));
+        }
+
 
         List<?> result = list.stream()
                 .map(p -> {
                     Integer t = p.getTypeofcon();
+                    boolean liked = likedIdSet.contains(p.getId());
+
                     if (t != null && t == 1) {
-                        return new PerformanceSimpleDto(p);
+                        return new PerformanceSimpleDto(p, liked);      // ✅ 새 생성자
                     } else {
-                        return new PerformanceFestivalDto(p);
+                        return new PerformanceFestivalDto(p, liked);    // ✅ 새 생성자
                     }
                 })
                 .toList();
@@ -130,10 +151,13 @@ public class KopisController implements KopisApi {
     }
 
 
+
     @Override
     @GetMapping("/performances/search")
     public ResponseEntity<List<PerformanceDetail>> searchByPrfnm(
-            @RequestParam("q") @NotBlank String keyword) {
+            @RequestParam("q") @NotBlank String keyword,
+            @AuthenticationPrincipal CustomUserDetails userDetails   // ✅ 추가
+    ) {
         String q = keyword.trim();
         List<PerformanceDetail> results =
                 performanceRepo.findTop50ByPrfnmContainingIgnoreCaseOrderByPrfpdfromDesc(q);
@@ -141,6 +165,18 @@ public class KopisController implements KopisApi {
         if (results.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
+
+        // ▼ 로그인 유저의 좋아요 공연 id 들
+        Long userId = (userDetails == null) ? null : userDetails.getId();
+
+        Set<Long> likedIdSet = new HashSet<>();
+        if (userId != null) {
+            likedIdSet.addAll(userPerformanceLikeRepository.findPerformanceIdsByUserId(userId));
+        }
+
+        // ▼ 엔티티에 liked 세팅
+        results.forEach(p -> p.setLiked(likedIdSet.contains(p.getId())));
+
         return ResponseEntity.ok(results);
     }
 
@@ -148,9 +184,24 @@ public class KopisController implements KopisApi {
     @Override
     @GetMapping("/performances/detail/{mt20id}")
     public ResponseEntity<PerformanceDetail> getLocalDetail(
-            @PathVariable("mt20id") String mt20id) {
+            @PathVariable("mt20id") String mt20id,
+            @AuthenticationPrincipal CustomUserDetails userDetails   // ✅ 추가
+    ) {
+        Long userId = (userDetails == null) ? null : userDetails.getId();
+
+        Set<Long> likedIdSet = new HashSet<>();
+        if (userId != null) {
+            likedIdSet.addAll(userPerformanceLikeRepository.findPerformanceIdsByUserId(userId));
+        }
+
         return performanceRepo.findByMt20id(mt20id.trim())
-                .map(ResponseEntity::ok)
+                .map(p -> {
+                    if (userId != null) {
+                        p.setLiked(likedIdSet.contains(p.getId()));   // ✅ liked 세팅
+                    }
+                    return ResponseEntity.ok(p);
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
+
 }

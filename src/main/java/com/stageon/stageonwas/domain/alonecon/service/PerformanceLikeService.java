@@ -64,9 +64,11 @@ public class PerformanceLikeService {
     public List<PerformanceLikeResDto> getMyConcerts(Long userId) {
         return userPerformanceLikeRepository.findAllWithPerformanceByUserId(userId)
                 .stream()
-                .map(like -> new PerformanceLikeResDto(like.getPerformance()))
+                .map(like -> new PerformanceLikeResDto(like.getPerformance(), true)) // ✅ 항상 true
                 .collect(Collectors.toList());
     }
+
+
 
 
 
@@ -74,9 +76,10 @@ public class PerformanceLikeService {
     public List<PerformanceLikeResDto> getMyFestivalConcerts(Long userId) {
         return userPerformanceLikeRepository.findAllWithPerformanceByUserId(userId)
                 .stream()
-                .map(UserPerformanceLike::getPerformance)              // PerformanceDetail 꺼내고
-                .filter(p -> p.getTypeofcon() != null && p.getTypeofcon() == 2) // typeofcon == 2만
-                .map(PerformanceLikeResDto::new)                       // DTO 로 변환
+                .map(UserPerformanceLike::getPerformance)
+                .filter(p -> p.getTypeofcon() != null && p.getTypeofcon() == 2)
+                .map(p -> new PerformanceLikeResDto(p, true))  // ✅ 여기서 liked = true
                 .collect(Collectors.toList());
     }
+
 }

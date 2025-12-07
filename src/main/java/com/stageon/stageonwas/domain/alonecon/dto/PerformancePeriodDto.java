@@ -24,8 +24,9 @@ public class PerformancePeriodDto {
     private String poster;
     private boolean newstate;
     private String fcltynm;
+    private boolean liked;
 
-    public PerformancePeriodDto (PerformanceDetail p) {
+    public PerformancePeriodDto (PerformanceDetail p, boolean liked) {
         this.mt20id = p.getMt20id();
         this.prfnm = p.getPrfnm();
         this.poster = p.getPoster();
@@ -33,5 +34,6 @@ public class PerformancePeriodDto {
         this.prfpdto = p.getPrfpdto();
         this.newstate = p.isNewstate();
         this.fcltynm = p.getFcltynm();
+        this.liked = liked;
     }
 }

@@ -38,9 +38,9 @@ public class PerformanceSimpleDto {
 
     private List<PerformanceDetail.ArtPic> styurls;
     private List<PerformanceDetail.Relate> relates;
+    private boolean liked;
 
-
-    public PerformanceSimpleDto(PerformanceDetail p) {
+    public PerformanceSimpleDto(PerformanceDetail p, boolean liked) {
         this.id = p.getId();
         this.mt20id = p.getMt20id();
         this.prfnm = p.getPrfnm();
@@ -60,5 +60,6 @@ public class PerformanceSimpleDto {
         this.relates = p.getRelates();
         this.newstate = p.isNewstate();
         this.locationUrl = p.getLocationUrl();
+        this.liked = liked;
     }
 }

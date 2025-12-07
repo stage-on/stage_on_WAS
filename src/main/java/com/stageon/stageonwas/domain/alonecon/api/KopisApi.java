@@ -106,16 +106,15 @@ public interface KopisApi {
     })
     List<PerformanceDetail> getRandom5Performances();
 
-    // =============== 4) 아티스트 이름으로 기간 정보 검색 ===============
     @Operation(
             summary = "아티스트 이름으로 공연 기간 정보 검색",
             description = """
-                    아티스트 이름으로 공연을 검색하고,
-                    기간 정보에 특화된 `PerformancePeriodDto` 리스트를 반환합니다.
-                    
-                    - 내부적으로 `performanceRepo.findByArtistNameAnywhere(q)` 호출
-                    - 공연이 하나도 없으면 `204 No Content` 반환
-                    """
+                아티스트 이름으로 공연을 검색하고,
+                기간 정보에 특화된 `PerformancePeriodDto` 리스트를 반환합니다.
+                
+                - 내부적으로 `performanceRepo.findByArtistNameAnywhere(q)` 호출
+                - 공연이 하나도 없으면 `204 No Content` 반환
+                """
     )
     @ApiResponses({
             @ApiResponse(
@@ -134,8 +133,12 @@ public interface KopisApi {
     })
     ResponseEntity<List<PerformancePeriodDto>> searchArtistPeriod(
             @Parameter(description = "검색 키워드", example = "잔나비")
-            @NotBlank String keyword
+            @NotBlank String keyword,
+
+            @Parameter(hidden = true)
+            CustomUserDetails userDetails
     );
+
 
     // =============== 5) 아티스트 이름으로 공연/페스티벌 검색 ===============
     @Operation(
@@ -162,7 +165,8 @@ public interface KopisApi {
             )
     })
     ResponseEntity<List<?>> searchArtist(
-            @Parameter(description = "검색 키워드", example = "새소년") String keyword
+            @Parameter(description = "검색 키워드", example = "새소년") String keyword,
+            @Parameter(hidden = true) CustomUserDetails userDetails
     );
 
     // =============== 6) 공연명 검색 ===============
@@ -192,9 +196,10 @@ public interface KopisApi {
             )
     })
     ResponseEntity<List<PerformanceDetail>> searchByPrfnm(
-            @Parameter(description = "검색 키워드", example = "록페")
-            @NotBlank String keyword
+            @NotBlank String keyword,
+            @Parameter(hidden = true) CustomUserDetails userDetails
     );
+
 
     // =============== 7) 단건 상세 조회 ===============
     @Operation(
@@ -222,6 +227,8 @@ public interface KopisApi {
             )
     })
     ResponseEntity<PerformanceDetail> getLocalDetail(
-            @Parameter(description = "KOPIS 공연 ID", example = "PF123456") String mt20id
+            @Parameter(description = "KOPIS 공연 ID", example = "PF123456") String mt20id,
+            @Parameter(hidden = true) CustomUserDetails userDetails
     );
+
 }

@@ -44,7 +44,8 @@ public class PerformanceDetail {
     @Column(columnDefinition = "TEXT")
     private String locationUrl;
 
-
+    @Transient          // ⚠️ DB 컬럼 안 만들어짐
+    private boolean liked;
    @Builder.Default
     @ElementCollection
     @CollectionTable(
