@@ -23,7 +23,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
 
-    private static final String TARGET_URL = "http://localhost:5173/";
+    private static final String TARGET_URL = "http://localhost:5173/callback";
 
     @Override
     public void onAuthenticationSuccess(
