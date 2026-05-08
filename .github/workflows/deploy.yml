@@ -1,0 +1,55 @@
+name: CI/CD Deploy (Develop Server Only)
+
+on:
+  push:
+    branches: [ "develop" ]   # develop 브랜치에 push될 때만 배포
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      ## 1. 소스 체크아웃
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      ## 2. JDK 설정
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      ## 3. gradlew 실행 권한 부여
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      ## 4. JAR 빌드 (Spring Boot 실행용 JAR 생성)
+      - name: Build with Gradle
+        run: ./gradlew clean bootJar
+
+      ## 5. 빌드된 jar 파일 확인 (로그로 실제 파일명 확인용)
+      - name: List built jars
+        run: ls -al build/libs
+
+      ## 6. SSH 키 등록
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/stagekey.pem
+          chmod 600 ~/.ssh/stagekey.pem
+
+      ## 7. 빌드된 JAR 서버로 복사 (버전 상관없이 *SNAPSHOT.jar를 app.jar로 덮어쓰기)
+      - name: Copy jar to EC2 (Develop Server)
+        run: |
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/stagekey.pem \
+            build/libs/STAGEON-was-0.0.1-SNAPSHOT.jar \
+            ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/stage_on_WAS/app.jar
+
+      ## 8. 서버 재시작 (systemd 서비스 기준)
+      - name: Restart stageon service
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/stagekey.pem \
+            ubuntu@${{ secrets.EC2_HOST }} \
+            "sudo systemctl daemon-reload && sudo systemctl restart stageon && sudo systemctl status stageon --no-pager -l"
